@@ -13,6 +13,7 @@ const initTextfield : typeTextfield = {
 export function SignUp(){
   const [email, setEmail] = useState<typeTextfield>(initTextfield)
   const [password, setPassword] = useState<typeTextfield>(initTextfield)
+  const [username, setUsername] = useState<typeTextfield>(initTextfield)
 
 
   function emailConsistency(email: string) : boolean{
@@ -23,16 +24,39 @@ export function SignUp(){
     return !(password.includes(" ") || password.length < 8)
   }
 
+  function usernameConsistency(username: string) : boolean{
+    return !(username.length < 3)
+  }
+
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
-    if(email.isValid && password.isValid){
-      console.log("Login realizado");
+    if(email.isValid && password.isValid && username.isValid){
+      if(email.isValid && password.isValid){
+        const opitions = {
+          method: 'POST',
+          body: new URLSearchParams({
+            username: username.data,
+            email: email.data,
+            password: password.data
+          })
+        }
+        fetch("http://localhost:3000/signup", opitions)
+          .then(response => response.json())
+          .then(data => console.log(data));
+      }
     }
   }
 
   return (
     <div>
       <form>
+        <TextField 
+            type='text' 
+            placeholder='Username'
+            valueData={username}
+            setValueData={setUsername}
+            verifyFunction = {usernameConsistency}
+            errorMessage = "Username inválido"/>
         <TextField 
             type='text' 
             placeholder='Email'
@@ -49,7 +73,7 @@ export function SignUp(){
             errorMessage = "Senha inválida"/>
         <button
           onClick={event => loginHandler(event)}
-        >Acessar</button>
+        >Cadastrar</button>
       </form>
     </div>
   )

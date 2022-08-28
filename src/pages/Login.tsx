@@ -21,7 +21,16 @@ export function Login(){
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
     if(email.isValid && password.isValid){
-      console.log("Login realizado");
+      const opitions = {
+        method: 'POST',
+        body: new URLSearchParams({
+          email: email.data,
+          password: password.data
+        })
+      }
+      fetch("http://localhost:3000/login", opitions)
+        .then(response => response.json())
+        .then(data => console.log(data));
     }
   }
 
