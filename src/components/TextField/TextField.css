@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.textfield-input{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: black;
+    min-width: 250px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    
+}
+
+.textfield-input::placeholder{
+    color: black
+}
+
+.textfield-error{
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 2px;
+    padding: 4px 10px;
+    height: 18px;
+    font-size: 0.7rem;
+    color: rgb(214, 0, 0);
+    box-sizing: border-box;
+}

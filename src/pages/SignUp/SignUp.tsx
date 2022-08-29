@@ -1,8 +1,7 @@
 import { useState, FormEvent} from 'react'
-import { EmailField } from '../components/EmailField'
-import { PasswordField } from '../components/PasswordField'
-import { TextField } from '../components/TextField'
-import { typeTextfield } from '../constraints/types'
+import { TextField } from '../../components/TextField/TextField'
+import { typeTextfield } from '../../constraints/types'
+import "./SignUp.css"
 
 const initTextfield : typeTextfield = {
   data: "",
@@ -49,6 +48,7 @@ export function SignUp(){
 
   return (
     <div>
+      <h1 className="title">Sign up</h1>
       <form>
         <TextField 
             type='text' 
@@ -73,6 +73,7 @@ export function SignUp(){
             errorMessage = "Senha inválida"/>
         <button
           onClick={event => loginHandler(event)}
+          className="signup-button"
         >Cadastrar</button>
       </form>
     </div>

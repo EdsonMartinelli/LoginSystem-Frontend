@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from "react";
-import { typeTextfield } from "../constraints/types";
+import { typeTextfield } from "../../constraints/types";
+import "./TextField.css"
 
 type textfieldProps = InputHTMLAttributes<HTMLInputElement> &{
     valueData: typeTextfield,
@@ -21,13 +22,16 @@ export function TextField({ valueData,
   }
 
   return (
-    <div>
+    <div className="textfield">
         <input 
           {...props}
+          className="textfield-input"
           onChange={event => verifyTextField(event.target.value)}
         >
         </input>
-        { (!valueData.isValid && valueData.isDirty) ? <span>{errorMessage}</span> : null}
+         <span className="textfield-error">
+          {(!valueData.isValid && valueData.isDirty) && errorMessage}
+         </span> 
     </div>
   )
 }
