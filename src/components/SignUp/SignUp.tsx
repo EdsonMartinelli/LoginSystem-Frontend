@@ -18,19 +18,17 @@ export function SignUp(){
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
     if(email.isValid && password.isValid && username.isValid){
-      if(email.isValid && password.isValid){
-        const opitions = {
-          method: 'POST',
-          body: new URLSearchParams({
-            username: username.data,
-            email: email.data,
-            password: password.data
-          })
-        }
-        fetch("http://localhost:3000/signup", opitions)
-          .then(response => response.json())
-          .then(data => console.log(data));
+      const opitions = {
+        method: 'POST',
+        body: new URLSearchParams({
+          username: username.data,
+          email: email.data,
+          password: password.data
+        })
       }
+      fetch("http://localhost:3000/signup", opitions)
+        .then(response => response.json())
+        .then(data => console.log(data));
     }
   }
 
