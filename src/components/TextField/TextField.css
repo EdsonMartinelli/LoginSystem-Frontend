@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.textfield-input{
+
+.textfield-input input{
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     color: black;
@@ -11,11 +12,14 @@
     padding: 10px 10px;
     box-sizing: border-box;
     vertical-align: middle;
-    
 }
 
-.textfield-input::placeholder{
+.textfield-input input::placeholder{
     color: black
+}
+
+.textfield-input img{
+    vertical-align: middle;
 }
 
 .textfield-error{

@@ -1,6 +1,7 @@
 import { useState, FormEvent} from 'react'
-import { EmailField } from '../components/EmailField'
-import { PasswordField } from '../components/PasswordField'
+import { emailConsistency, passwordConsistency } from '../../constraints/fieldsConsistency'
+import { TextField } from '../TextField/TextField'
+import "./Login.css"
 
 type textfield ={
   data: string,
@@ -37,11 +38,25 @@ export function Login(){
   return (
     <div>
       <form>
-        <EmailField email={email} setEmail={setEmail} />
-        <PasswordField password={password} setPassword={setPassword} />
+      <h1 className='title'>Login</h1>
+      <TextField 
+            type='text' 
+            placeholder='Email'
+            valueData={email}
+            setValueData={setEmail}
+            verifyFunction = {emailConsistency}
+            errorMessage = "Invalid email."/>
+        <TextField 
+            type='password' 
+            placeholder='Password'
+            valueData={password}
+            setValueData={setPassword}
+            verifyFunction = {passwordConsistency}
+            errorMessage = "Invalid password."/>
         <button
+          className='login-button'
           onClick={event => loginHandler(event)}
-        >Acessar</button>
+        >Login</button>
       </form>
     </div>
   )

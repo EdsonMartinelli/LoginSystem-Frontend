@@ -1,5 +1,7 @@
-import { InputHTMLAttributes } from "react";
+import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from "react";
 import { typeTextfield } from "../../constraints/types";
+import show from "../../assets/react.svg"
+import clear from "../../assets/vite.svg"
 import "./TextField.css"
 
 type textfieldProps = InputHTMLAttributes<HTMLInputElement> &{
@@ -15,23 +17,49 @@ export function TextField({ valueData,
                             errorMessage = "", 
                             ...props} : textfieldProps){
 
-  function verifyTextField(stringValue: string) : void{
+  const [passwordShow, setPasswordShow] = useState<boolean>(false);
+
+  function isPasswordShow(): HTMLInputTypeAttribute | undefined{
+    if (props.type == 'password') {
+      return (passwordShow)? "text": "password"
+    }
+    return props.type ?? ""
+  }
+
+  function verifyTextField(stringValue: string, reset: boolean) : void{
     setValueData({ data: stringValue,
                    isValid: verifyFunction(stringValue),
-                   isDirty: true });
+                   isDirty: !reset });
   }
 
   return (
     <div className="textfield">
+      <div className="textfield-input">
         <input 
           {...props}
-          className="textfield-input"
-          onChange={event => verifyTextField(event.target.value)}
+          value = {valueData.data}
+          type={isPasswordShow()}
+          onChange={event => verifyTextField(event.target.value, false)}
         >
         </input>
-         <span className="textfield-error">
-          {(!valueData.isValid && valueData.isDirty) && errorMessage}
-         </span> 
+        {
+          (props.type == 'password') ?
+            <img 
+              src={show} 
+              alt="show"
+              onClick={() => {setPasswordShow(!passwordShow)}}
+            /> 
+          :
+            <img 
+            src={clear} 
+            alt="clear"
+            onClick={() => {verifyTextField("", true)}}
+            /> 
+        }
+      </div>
+      <span className="textfield-error">
+      {(!valueData.isValid && valueData.isDirty) && errorMessage}
+      </span> 
     </div>
   )
 }

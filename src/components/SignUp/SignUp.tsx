@@ -1,6 +1,7 @@
 import { useState, FormEvent} from 'react'
-import { TextField } from '../../components/TextField/TextField'
+import { TextField } from '../TextField/TextField'
 import { typeTextfield } from '../../constraints/types'
+import { emailConsistency, passwordConsistency, usernameConsistency } from '../../constraints/fieldsConsistency'
 import "./SignUp.css"
 
 const initTextfield : typeTextfield = {
@@ -13,19 +14,6 @@ export function SignUp(){
   const [email, setEmail] = useState<typeTextfield>(initTextfield)
   const [password, setPassword] = useState<typeTextfield>(initTextfield)
   const [username, setUsername] = useState<typeTextfield>(initTextfield)
-
-
-  function emailConsistency(email: string) : boolean{
-    return /\S+@\S+\.\S+/.test(email)
-  }
-
-  function passwordConsistency(password: string) : boolean{
-    return !(password.includes(" ") || password.length < 8)
-  }
-
-  function usernameConsistency(username: string) : boolean{
-    return !(username.length < 3)
-  }
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
@@ -56,25 +44,25 @@ export function SignUp(){
             valueData={username}
             setValueData={setUsername}
             verifyFunction = {usernameConsistency}
-            errorMessage = "Username inválido"/>
+            errorMessage = "Invalid username."/>
         <TextField 
             type='text' 
             placeholder='Email'
             valueData={email}
             setValueData={setEmail}
             verifyFunction = {emailConsistency}
-            errorMessage = "Email inválido"/>
+            errorMessage = "Invalid email."/>
         <TextField 
             type='password' 
             placeholder='Password'
             valueData={password}
             setValueData={setPassword}
             verifyFunction = {passwordConsistency}
-            errorMessage = "Senha inválida"/>
+            errorMessage = "Invalid password."/>
         <button
           onClick={event => loginHandler(event)}
           className="signup-button"
-        >Cadastrar</button>
+        >Sign up</button>
       </form>
     </div>
   )

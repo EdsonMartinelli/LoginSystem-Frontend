@@ -1,11 +1,9 @@
-import { Login } from './pages/Login'
-import { SignUp } from './pages/SignUp/SignUp'
+import { Autentication } from './pages/Autentication/Autentication'
 
 function App() {
   return (
     <div>
-      <SignUp />
-      <Login />
+      <Autentication />
     </div>
   )
 }
