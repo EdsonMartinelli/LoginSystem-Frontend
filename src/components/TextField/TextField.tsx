@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from "react";
+import { InputHTMLAttributes, useState } from "react";
 import { typeTextfield } from "../../constraints/types";
 import show from "../../assets/react.svg"
 import clear from "../../assets/vite.svg"
@@ -18,12 +18,10 @@ export function TextField({ valueData,
                             ...props} : textfieldProps){
 
   const [passwordShow, setPasswordShow] = useState<boolean>(false);
+  const {type, ...propsWithoutType} = props
 
-  function isPasswordShow(): HTMLInputTypeAttribute | undefined{
-    if (props.type == 'password') {
-      return (passwordShow)? "text": "password"
-    }
-    return props.type ?? ""
+  function isPasswordShow(): string{
+    return (passwordShow) ? "text": "password"
   }
 
   function verifyTextField(stringValue: string, reset: boolean) : void{
@@ -36,9 +34,9 @@ export function TextField({ valueData,
     <div className="textfield">
       <div className="textfield-input">
         <input 
-          {...props}
+          {...propsWithoutType}
           value = {valueData.data}
-          type={isPasswordShow()}
+          type={(props.type == 'password') ? isPasswordShow() : props.type}
           onChange={event => verifyTextField(event.target.value, false)}
         >
         </input>
