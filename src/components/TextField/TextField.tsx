@@ -35,9 +35,9 @@ export function TextField({ valueData,
       <div className="textfield-input">
         <input 
           {...propsWithoutType}
-          value = {valueData.data}
           type={(props.type == 'password') ? isPasswordShow() : props.type}
           onChange={event => verifyTextField(event.target.value, false)}
+          value = {valueData.data}
         >
         </input>
         {
