@@ -25,13 +25,13 @@ export function TextField({ reference,
   }
 
   function verifyTextField( reset: boolean) : void{
-    if (reference.current != undefined) {
+    if (reference.current) {
       const verificatedValue = verifyFunction(reference.current.value);
       reference.current.isValid = verificatedValue;
 
       if (verificatedValue != !errorState) setErrorState(!errorState);
 
-      if(reset) {
+      if (reset) {
         reference.current.value = ""
         reference.current.isValid = false
         setErrorState(false);
