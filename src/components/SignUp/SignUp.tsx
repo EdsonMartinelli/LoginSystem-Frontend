@@ -1,34 +1,35 @@
-import { useState, FormEvent} from 'react'
+import { FormEvent, useRef} from 'react'
 import { TextField } from '../TextField/TextField'
-import { typeTextfield } from '../../constraints/types'
 import { emailConsistency, passwordConsistency, usernameConsistency } from '../../constraints/fieldsConsistency'
+import { typeTextfieldRef } from '../../constraints/types'
 import "./SignUp.css"
 
-const initTextfield : typeTextfield = {
-  data: "",
-  isValid: false,
-  isDirty: false
-} 
-
 export function SignUp(){
-  const [email, setEmail] = useState<typeTextfield>(initTextfield)
-  const [password, setPassword] = useState<typeTextfield>(initTextfield)
-  const [username, setUsername] = useState<typeTextfield>(initTextfield)
+
+  const usernameRef = useRef<typeTextfieldRef>(null)
+  const emailRef = useRef<typeTextfieldRef>(null)
+  const passwordRef = useRef<typeTextfieldRef>(null)
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
-    if(email.isValid && password.isValid && username.isValid){
-      const opitions = {
-        method: 'POST',
-        body: new URLSearchParams({
-          username: username.data,
-          email: email.data,
-          password: password.data
-        })
-      }
-      fetch("http://localhost:3000/signup", opitions)
-        .then(response => response.json())
-        .then(data => console.log(data));
+    
+    if (usernameRef.current?.isValid && emailRef.current?.isValid &&
+        passwordRef.current?.isValid){
+
+        const opitions = {
+          method: 'POST',
+          body: new URLSearchParams({
+            username:usernameRef.current.value,
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+          })
+        }
+        fetch("http://localhost:3000/signup", opitions)
+          .then(response => response.json())
+          .then(data => console.log(data))
+
+    } else {
+      console.log(usernameRef.current);
     }
   }
 
@@ -39,22 +40,19 @@ export function SignUp(){
         <TextField 
             type='text' 
             placeholder='Username'
-            valueData={username}
-            setValueData={setUsername}
+            reference={usernameRef}
             verifyFunction = {usernameConsistency}
             errorMessage = "Invalid username."/>
-        <TextField 
+        <TextField
             type='text' 
             placeholder='Email'
-            valueData={email}
-            setValueData={setEmail}
+            reference={emailRef}
             verifyFunction = {emailConsistency}
             errorMessage = "Invalid email."/>
-        <TextField 
+        <TextField
             type='password' 
             placeholder='Password'
-            valueData={password}
-            setValueData={setPassword}
+            reference={passwordRef}
             verifyFunction = {passwordConsistency}
             errorMessage = "Invalid password."/>
         <button

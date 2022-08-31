@@ -1,32 +1,22 @@
-import { useState, FormEvent} from 'react'
+import { useState, FormEvent, useRef} from 'react'
 import { emailConsistency, passwordConsistency } from '../../constraints/fieldsConsistency'
+import { typeTextfieldRef } from '../../constraints/types'
 import { TextField } from '../TextField/TextField'
 import "./Login.css"
 
-type textfield ={
-  data: string,
-  isValid: boolean,
-  isDirty: boolean
-}
-
-const initTextfield : textfield = {
-  data: "",
-  isValid: false,
-  isDirty: false
-} 
-
 export function Login(){
-  const [email, setEmail] = useState<textfield>(initTextfield)
-  const [password, setPassword] = useState<textfield>(initTextfield)
+  const emailRef = useRef<typeTextfieldRef>(null)
+  const passwordRef = useRef<typeTextfieldRef>(null)
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
-    if(email.isValid && password.isValid){
+    if (emailRef.current?.isValid && passwordRef.current?.isValid){
+
       const opitions = {
         method: 'POST',
         body: new URLSearchParams({
-          email: email.data,
-          password: password.data
+          email: emailRef.current.value,
+          password: passwordRef.current.value
         })
       }
       fetch("http://localhost:3000/login", opitions)
@@ -38,21 +28,19 @@ export function Login(){
   return (
     <div>
       <form>
-      <h1 className='title'>Login</h1>
-      <TextField 
-            type='text' 
-            placeholder='Email'
-            valueData={email}
-            setValueData={setEmail}
-            verifyFunction = {emailConsistency}
-            errorMessage = "Invalid email."/>
+        <h1 className='title'>Login</h1>
         <TextField 
-            type='password' 
-            placeholder='Password'
-            valueData={password}
-            setValueData={setPassword}
-            verifyFunction = {passwordConsistency}
-            errorMessage = "Invalid password."/>
+          type='text' 
+          placeholder='Email'
+          reference={emailRef}
+          verifyFunction = {emailConsistency}
+          errorMessage = "Invalid email."/>
+        <TextField 
+          type='password' 
+          placeholder='Password'
+          reference={passwordRef}
+          verifyFunction = {passwordConsistency}
+          errorMessage = "Invalid password."/>
         <button
           className='login-button'
           onClick={event => loginHandler(event)}
