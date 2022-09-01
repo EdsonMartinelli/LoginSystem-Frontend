@@ -24,7 +24,7 @@ export function TextField({ reference,
     return (passwordShow) ? "text": "password";
   }
 
-  function verifyTextField( reset: boolean) : void{
+  function verifyTextField( reset: boolean ) : void{
     if (reference.current) {
       const verificatedValue = verifyFunction(reference.current.value);
       reference.current.isValid = verificatedValue;

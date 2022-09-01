@@ -1,6 +1,7 @@
 import { useState, FormEvent, useRef} from 'react'
 import { emailConsistency, passwordConsistency } from '../../constraints/fieldsConsistency'
 import { typeTextfieldRef } from '../../constraints/types'
+import { useAxios } from '../../hooks/useAxios'
 import { TextField } from '../TextField/TextField'
 import "./Login.css"
 
@@ -12,16 +13,16 @@ export function Login(){
     event.preventDefault();
     if (emailRef.current?.isValid && passwordRef.current?.isValid){
 
-      const opitions = {
-        method: 'POST',
-        body: new URLSearchParams({
+        useAxios.post('/login', {
           email: emailRef.current.value,
           password: passwordRef.current.value
-        })
-      }
-      fetch("http://localhost:3000/login", opitions)
-        .then(response => response.json())
-        .then(data => console.log(data));
+        }).then(response => {
+          console.log(response.data)
+        }).catch(error => {
+          console.log(error.response.data)
+        })  
+    } else {
+      console.log("Login error.")
     }
   }
   

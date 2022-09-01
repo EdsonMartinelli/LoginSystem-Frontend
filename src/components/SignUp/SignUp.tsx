@@ -1,5 +1,6 @@
 import { FormEvent, useRef} from 'react'
 import { TextField } from '../TextField/TextField'
+import { useAxios } from '../../hooks/useAxios'
 import { emailConsistency, passwordConsistency, usernameConsistency } from '../../constraints/fieldsConsistency'
 import { typeTextfieldRef } from '../../constraints/types'
 import "./SignUp.css"
@@ -16,20 +17,18 @@ export function SignUp(){
     if (usernameRef.current?.isValid && emailRef.current?.isValid &&
         passwordRef.current?.isValid){
 
-        const opitions = {
-          method: 'POST',
-          body: new URLSearchParams({
-            username:usernameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value
-          })
-        }
-        fetch("http://localhost:3000/signup", opitions)
-          .then(response => response.json())
-          .then(data => console.log(data))
+        useAxios.post('/signup', {
+          username:usernameRef.current.value,
+          email: emailRef.current.value,
+          password: passwordRef.current.value
+        }).then(response => {
+          console.log(response.data)
+        }).catch(error => {
+          console.log(error.response.data)
+        })
 
     } else {
-      console.log(usernameRef.current);
+      console.log("Sign up error.");
     }
   }
 
