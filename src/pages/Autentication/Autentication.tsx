@@ -14,20 +14,14 @@ export function Autentication(){
   const navigate = useNavigate();
 
   function handleClick() {
-    if(getLastPage() == "login"){
-      navigate("/auth/signup");
-    } else {
-      navigate("/auth/login");
-    }
+    (getLastPage() == "login") ? navigate("/auth/signup") : navigate("/auth/login")
   }
 
   return (
     <motion.div 
       className="content"
         initial={{flexDirection: (getLastPage() == "login") ? "row-reverse" : "row"}}
-        animate={{}}
-        exit={{}}
-        transition={{ duration: 0 , delay: 1 }}
+        transition={{ delay: 1 }}
       >
       <motion.aside 
         className="signup-content"
@@ -38,7 +32,6 @@ export function Autentication(){
       >
         <button onClick={() => {handleClick()}}> teste</button>
       </motion.aside>
-
       <motion.main 
         className="login-content"
         initial={{opacity :0 }}
