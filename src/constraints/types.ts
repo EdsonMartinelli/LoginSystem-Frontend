@@ -1,4 +1,5 @@
 export type typeTextfieldRef = HTMLInputElement & {
-    isValid: boolean
+    isValid: boolean,
+    isDirty: boolean
 }
   
