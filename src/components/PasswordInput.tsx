@@ -1,5 +1,11 @@
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { Button, FormControl, FormErrorMessage, Input, InputGroup, InputProps, InputRightElement } from "@chakra-ui/react";
+import { Button,
+         FormControl,
+         FormErrorMessage, 
+         Input,
+         InputGroup,
+         InputProps,
+         InputRightElement } from "@chakra-ui/react";
 import { RefObject, useState } from "react";
 import { passwordConsistency } from "../constraints/fieldsConsistency";
 import { typeTextfieldRef } from "../constraints/types";
