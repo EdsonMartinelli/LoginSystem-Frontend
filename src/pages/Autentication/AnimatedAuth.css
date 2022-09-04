@@ -8,7 +8,7 @@
     gap: 50px;
 }
 
-.login-content{
+.outlet-content{
     width: 450px;
     height: 60%;
     display: flex;
@@ -18,7 +18,7 @@
     border-radius: 10px;
 }
 
-.signup-content{
+.image-content{
     width: 450px;
     height: 60%;
     display: flex;
@@ -28,5 +28,9 @@
     border-radius: 10px;
 
     background-color: black;
-    z-index: 999;
+}
+
+.image-content-button{
+    background-color: #fff;
+    padding: 5px;
 }
