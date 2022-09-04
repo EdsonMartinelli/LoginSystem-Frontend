@@ -1,11 +1,11 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Button, Heading, VStack } from '@chakra-ui/react'
 import { FormEvent, useRef} from 'react'
+import { PasswordInput } from '../components/PasswordInput'
+import { TextInput } from '../components/TextInput'
 import { emailConsistency } from '../constraints/fieldsConsistency'
 import { typeTextfieldRef } from '../constraints/types'
 import { useAxios } from '../hooks/useAxios'
-import { PasswordInput } from './PasswordInput'
-import { TextInput } from './TextInput'
 
 export function Login(){
   const emailRef = useRef<typeTextfieldRef>(null)

@@ -3,9 +3,9 @@ import { useAxios } from '../hooks/useAxios'
 import { emailConsistency, usernameConsistency } from '../constraints/fieldsConsistency'
 import { typeTextfieldRef } from '../constraints/types'
 import { Button, Heading, VStack } from '@chakra-ui/react'
-import { PasswordInput } from './PasswordInput'
+import { PasswordInput } from '../components/PasswordInput'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { TextInput } from './TextInput'
+import { TextInput } from '../components/TextInput'
 
 export function SignUp(){
 

@@ -1,12 +1,12 @@
-import { AnimatedAuth } from './pages/Animated/AnimatedAuth'
+import { AnimatedAuth } from './animated/AnimatedAuth'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { Home } from './pages/Home/Home'
-import { Login } from './components/Login'
-import { SignUp } from './components/SignUp'
 import { AnimatePresence } from 'framer-motion'
-import { ConfirmEmail } from './components/ConfirmEmail'
-import { AccountActivated } from './components/AccountActivated'
-import { RecoverPassword } from './components/RecoverPassword'
+import { Home } from './pages/Home/Home'
+import { SignUp } from './pages/SignUp'
+import { Login } from './pages/Login'
+import { RecoverPassword } from './pages/RecoverPassword'
+import { ConfirmEmail } from './pages/ConfirmEmail'
+import { AccountActivated } from './pages/AccountActivated'
 
 /* 
    You need to wrap the entire app with AnimationPresence. The attribute 
