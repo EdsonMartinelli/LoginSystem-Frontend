@@ -28,6 +28,7 @@
     border-radius: 10px;
 
     background-color: black;
+    z-index: 2;
 }
 
 .image-content-button{
