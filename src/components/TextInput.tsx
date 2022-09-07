@@ -7,7 +7,7 @@ import { Button,
          InputProps,
          InputRightElement } from "@chakra-ui/react";
 import { RefObject, useState } from "react";
-import { typeTextfieldRef } from "../constraints/types";
+import { typeTextfieldRef } from "../constraints/types/TextFieldRef";
 
 type emailInputProps = InputProps & {
     reference: RefObject<typeTextfieldRef>,

@@ -7,8 +7,8 @@ import { Button,
          InputProps,
          InputRightElement } from "@chakra-ui/react";
 import { RefObject, useState } from "react";
-import { passwordConsistency } from "../constraints/fieldsConsistency";
-import { typeTextfieldRef } from "../constraints/types";
+import { typeTextfieldRef } from "../constraints/types/TextFieldRef";
+import { passwordConsistency } from "../constraints/verifiers/passwordConsistency";
 
 type passwordInputProps = InputProps &{
     reference: RefObject<typeTextfieldRef>,

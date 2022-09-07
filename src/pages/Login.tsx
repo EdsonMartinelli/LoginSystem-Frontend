@@ -3,8 +3,8 @@ import { Button, Heading, VStack } from '@chakra-ui/react'
 import { FormEvent, useRef} from 'react'
 import { PasswordInput } from '../components/PasswordInput'
 import { TextInput } from '../components/TextInput'
-import { emailConsistency } from '../constraints/fieldsConsistency'
-import { typeTextfieldRef } from '../constraints/types'
+import { typeTextfieldRef } from '../constraints/types/TextFieldRef'
+import { emailConsistency } from '../constraints/verifiers/emailConsistency'
 import { useAxios } from '../hooks/useAxios'
 
 export function Login(){

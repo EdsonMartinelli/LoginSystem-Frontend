@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { typeOrientationAuthAnimation, typeState } from "../constraints/types";
+import { typeOrientationAuthAnimation, typeState } from "../constraints/types/AnimatedAuth";
+
 import "./AnimatedAuth.css"
 
 export function AnimatedAuthLeftToRight(){
   const navigate = useNavigate()
   const location = useLocation();
   const orientation: typeOrientationAuthAnimation = "LeftToRight"
-  const previousOrientation: typeOrientationAuthAnimation | undefined = (location.state as typeState)?.orientation
+  const previousOrientation= (location.state as typeState)?.orientation
 
   function goToLogin() {
     navigate("/login", { state: { orientation } })
