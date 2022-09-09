@@ -6,28 +6,30 @@ import { Button,
          InputGroup,
          InputProps,
          InputRightElement } from "@chakra-ui/react";
-import { RefObject, useState } from "react";
+import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { typeTextfieldRef } from "../constraints/types/TextFieldRef";
 
 type emailInputProps = InputProps & {
     reference: RefObject<typeTextfieldRef>,
     verifyFunction?: (params: any) => boolean,
+    isValidState: boolean,
+    setIsValidState: Dispatch<SetStateAction<boolean>>,
     erroMessage?: string
 }
 
 export function TextInput( {reference,
-                             erroMessage = "",
-                             verifyFunction = () => true,
-                             ...props} : emailInputProps) {
+                            erroMessage = "",
+                            verifyFunction = () => true,
+                            isValidState,
+                            setIsValidState,
+                            ...props} : emailInputProps) {
 
-    const [isValidText, setIsValidText] = useState<boolean>(false)
     const [isDirtyText, setIsDirtyText] = useState<boolean>(false)
         
     function resetInput(){
         if (reference.current) {
             reference.current.value = "";
-            reference.current.isValid = false;
-            setIsValidText(false)
+            setIsValidState(false)
 
             reference.current.isDirty = false;
             setIsDirtyText(false)
@@ -37,9 +39,8 @@ export function TextInput( {reference,
     function verifyEmailInput() {
         if (reference.current) {
             const isValidCheck = verifyFunction(reference.current.value);
-            if (reference.current.isValid != isValidCheck){
-                reference.current.isValid = isValidCheck;
-                setIsValidText(isValidCheck)
+            if (isValidState != isValidCheck){
+                setIsValidState(isValidCheck)
             }
 
             if (!reference.current.isDirty){
@@ -50,7 +51,7 @@ export function TextInput( {reference,
     }
 
     return (
-        <FormControl isInvalid={!isValidText && isDirtyText} height="45px">
+        <FormControl isInvalid={!isValidState && isDirtyText} height="45px">
             <InputGroup size='md'>
                 <Input
                 {...props}

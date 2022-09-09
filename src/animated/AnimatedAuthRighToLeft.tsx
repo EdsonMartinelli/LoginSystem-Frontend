@@ -17,10 +17,6 @@ export function AnimatedAuthRightToLeft(){
     navigate("/activated", { state: { orientation } }) 
   }
 
-  function recoverPassword() {
-    navigate("/recover", { state: { orientation } }) 
-  }
-
   return (
     <div className="content">      
       <motion.main 
@@ -44,12 +40,6 @@ export function AnimatedAuthRightToLeft(){
           onClick={() => {accountActivated()}}
         > 
           Account Activated
-        </button>
-        <button 
-          className="image-content-button"
-          onClick={() => {recoverPassword()}}
-        > 
-          Recover Password
         </button>
         <button 
           className="image-content-button"

@@ -1,27 +1,40 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { Button, Heading, VStack } from '@chakra-ui/react'
-import { FormEvent, useRef} from 'react'
+import { Button,
+         Checkbox,
+         Heading,
+         VStack,
+         Text,
+         Flex,
+         Spacer,
+         Link } from '@chakra-ui/react'
+import { FormEvent, useRef, useState} from 'react'
+import { NavLink } from 'react-router-dom'
 import { PasswordInput } from '../components/PasswordInput'
 import { TextInput } from '../components/TextInput'
+import { typeOrientationAuthAnimation } from '../constraints/types/AnimatedAuth'
 import { typeTextfieldRef } from '../constraints/types/TextFieldRef'
 import { emailConsistency } from '../constraints/verifiers/emailConsistency'
 import { useAxios } from '../hooks/useAxios'
 
-export function Login(){
+export function Login({ orientation } : { orientation : typeOrientationAuthAnimation }){
   const emailRef = useRef<typeTextfieldRef>(null)
   const passwordRef = useRef<typeTextfieldRef>(null)
 
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
+
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
-    if (emailRef.current?.isValid && passwordRef.current?.isValid){
-        useAxios.post('/login', {
-          email: emailRef.current?.value,
-          password: passwordRef.current?.value
-        }).then(response => {
-          console.log(response.data)
-        }).catch(error => {
-          console.log(error.response.data)
-        })
+    
+    if(isValidPassword && isValidEmail){
+      useAxios.post('/login', {
+        email: emailRef.current?.value,
+        password: passwordRef.current?.value
+      }).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error.response.data)
+      })
     } else {
       console.log("Login error.")
     }
@@ -36,20 +49,38 @@ export function Login(){
             type='email' 
             placeholder='Email'
             reference={emailRef}
-            erroMessage="email password"
+            isValidState={isValidEmail}
+            setIsValidState={setIsValidEmail}
+            erroMessage="Invalid email."
             verifyFunction={emailConsistency}
           />
           <PasswordInput
             type='password' 
             placeholder='Password'
             reference={passwordRef}
-            erroMessage="error password"
+            isValidState={isValidPassword}
+            setIsValidState={setIsValidPassword}
+            erroMessage="Invalid password."
           />
+          <Flex width="full" align="center" justify="center">
+            <Checkbox size='md' >Remember me</Checkbox>
+            <Spacer />
+            <Text fontSize='xs'>
+              <Link 
+                as={NavLink} 
+                to={{pathname:'/recover'}} 
+                state={{orientation}} 
+              >
+                Forgot your password?
+              </Link>
+            </Text>
+          </Flex>
           <Button 
             colorScheme='blue'
             width='full'
             rightIcon={<ArrowForwardIcon />}
             onClick={(event)=> loginHandler(event)}
+            isDisabled={(isValidPassword && isValidEmail) ? false : true}
           >
             Login
           </Button>

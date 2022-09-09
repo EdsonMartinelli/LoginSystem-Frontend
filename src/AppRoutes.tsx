@@ -26,7 +26,7 @@ function AppRoutes() {
     <AnimatePresence exitBeforeEnter>
       <Routes location={location} key={location.pathname}>
         <Route element={<AnimatedAuthRightToLeft />}> 
-          <Route path="/login" element={<Login />}/>
+          <Route path="/login" element={<Login orientation={'RightToLeft'}/>}/>
           <Route path="/recover" element={<RecoverPassword />}/>
         </Route>
         <Route element={<AnimatedAuthLeftToRight />}> 

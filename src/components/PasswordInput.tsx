@@ -6,30 +6,32 @@ import { Button,
          InputGroup,
          InputProps,
          InputRightElement } from "@chakra-ui/react";
-import { RefObject, useState } from "react";
+import { Dispatch, RefObject, SetStateAction, useState } from "react";
 import { typeTextfieldRef } from "../constraints/types/TextFieldRef";
 import { passwordConsistency } from "../constraints/verifiers/passwordConsistency";
 
 type passwordInputProps = InputProps &{
     reference: RefObject<typeTextfieldRef>,
+    isValidState: boolean,
+    setIsValidState: Dispatch<SetStateAction<boolean>>,
     erroMessage?: string
 }
 
 export function PasswordInput( {reference,
+                                isValidState,
+                                setIsValidState,
                                 erroMessage,
                                 ...props} : passwordInputProps) {
 
     const [passwordShow, setPasswordShow] = useState<boolean>(false)
-    const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
     const [isDirtyPassword, setIsDirtyPassword] = useState<boolean>(false)
     const {type,...restOfProps} = props
 
     function verifyPasswordInput() {
         if (reference.current) {
             const isValid = passwordConsistency(reference.current.value);
-            if (reference.current.isValid != isValid){
-                reference.current.isValid = isValid
-                setIsValidPassword(isValid)
+            if (isValidState != isValid){
+                setIsValidState(isValid)
             }
 
             if (!reference.current.isDirty){
@@ -40,32 +42,26 @@ export function PasswordInput( {reference,
     }
 
     return (
-        <FormControl isInvalid={!isValidPassword && isDirtyPassword} height="45px">
+        <FormControl isInvalid={!isValidState && isDirtyPassword} height="45px">
             <InputGroup size='md'>
-            <Input
-            {...restOfProps}
-            pr='4.5rem'
-            type={passwordShow ? 'text' : 'password'}
-            onChange={() => verifyPasswordInput()}
-            ref={reference}
-            />
-            <InputRightElement width='3rem'>
-                <Button 
-                h='1.75rem'
-                size='sm'
-                onClick={() => {setPasswordShow(!passwordShow)}}
-                >
-                    {passwordShow ? <ViewOffIcon/> : <ViewIcon/>} 
-                </Button>
-            </InputRightElement>
+                <Input
+                {...restOfProps}
+                pr='4.5rem'
+                type={passwordShow ? 'text' : 'password'}
+                onChange={() => verifyPasswordInput()}
+                ref={reference}
+                />
+                <InputRightElement width='3rem'>
+                    <Button 
+                    h='1.75rem'
+                    size='sm'
+                    onClick={() => {setPasswordShow(!passwordShow)}}
+                    >
+                        {passwordShow ? <ViewOffIcon/> : <ViewIcon/>} 
+                    </Button>
+                </InputRightElement>
             </InputGroup>
-            {
-                (!isValidPassword) ? (
-                    <FormErrorMessage>{erroMessage}</FormErrorMessage>
-                ) : (
-                    null
-                )
-            }
+            <FormErrorMessage>{erroMessage}</FormErrorMessage>
         </FormControl>
     )
 }
