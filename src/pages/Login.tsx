@@ -63,7 +63,7 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
             erroMessage="Invalid password."
           />
           <Flex width="full" align="center" justify="center">
-            <Checkbox size='md' >Remember me</Checkbox>
+            <Checkbox size='sm' >Remember me</Checkbox>
             <Spacer />
             <Text fontSize='xs'>
               <Link 

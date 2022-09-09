@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState} from 'react'
 import { useAxios } from '../hooks/useAxios'
-import { Button, Heading, VStack } from '@chakra-ui/react'
+import { Button, Checkbox, Heading, VStack } from '@chakra-ui/react'
 import { PasswordInput } from '../components/PasswordInput'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { TextInput } from '../components/TextInput'
@@ -17,11 +17,12 @@ export function SignUp(){
   const [isValidUsername, setIsValidUsername] = useState<boolean>(false)
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
+  const [isValidTerms, setIsValidTerms] = useState<boolean>(false)
 
   function signupHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
  
-    if(isValidEmail && isValidPassword && isValidUsername){
+    if(isValidEmail && isValidPassword && isValidUsername && isValidTerms){
       useAxios.post('/signup', {
           username:usernameRef.current?.value,
           email: emailRef.current?.value,
@@ -67,12 +68,21 @@ export function SignUp(){
             setIsValidState={setIsValidPassword}
             erroMessage="Invalid password."
           />
+          <Checkbox 
+            size='sm'
+            onChange={() => {setIsValidTerms(!isValidTerms)}}
+          >
+            I agree with all Terms and Conditions
+          </Checkbox>
           <Button 
             colorScheme='red'
             width='full'
             rightIcon={<ArrowForwardIcon />}
             onClick={event=> signupHandler(event)}
-            isDisabled={(isValidEmail && isValidPassword && isValidUsername) ? false : true}
+            isDisabled={(isValidEmail &&
+                         isValidPassword &&
+                         isValidUsername &&
+                         isValidTerms) ? false : true}
           >
             Sign up
           </Button>
