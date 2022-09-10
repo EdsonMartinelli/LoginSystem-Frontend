@@ -7,15 +7,14 @@ import { Button,
          Flex,
          Spacer,
          Link } from '@chakra-ui/react'
-import { FormEvent, useContext, useRef, useState} from 'react'
+import { FormEvent, useRef, useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { PasswordInput } from '../components/PasswordInput'
 import { TextInput } from '../components/TextInput'
 import { typeOrientationAuthAnimation } from '../constraints/types/AnimatedAuth'
 import { typeTextfieldRef } from '../constraints/types/TextFieldRef'
 import { emailConsistency } from '../constraints/verifiers/emailConsistency'
-import { useAxios } from '../hooks/useAxios'
-import { AuthContext } from '../providers/AuthProvider'
+import { useAuth } from '../hooks/useAuth'
 
 export function Login({ orientation } : { orientation : typeOrientationAuthAnimation }){
   const emailRef = useRef<typeTextfieldRef>(null)
@@ -25,12 +24,12 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const {getUser} = useContext(AuthContext)
+  const {getUser} = useAuth()
   const navigate = useNavigate()
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();   
-    if(emailRef.current && passwordRef.current){
+    if( emailRef.current && passwordRef.current ){
       const loginInfo = { 
         email: emailRef.current?.value,
         password: passwordRef.current?.value
@@ -46,14 +45,6 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
           setIsLoading(false)
         })
     }
-    /*useAxios.post('/login', {
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value
-      }).then(response => {
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error.response.data)
-      })*/
   }
 
   return(
@@ -108,6 +99,5 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
         </VStack>
       </form>
     </div>
-  
   )
 }
