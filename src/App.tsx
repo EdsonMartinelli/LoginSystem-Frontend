@@ -1,14 +1,20 @@
 import { ChakraProvider } from '@chakra-ui/react'
+import { AnimatePresence } from 'framer-motion'
 import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from './AppRoutes'
+import { AuthProvider } from './providers/AuthProvider'
 
 
 function App() {
   return (
     <ChakraProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <AnimatePresence exitBeforeEnter>
+            <AppRoutes />
+          </AnimatePresence>
+        </BrowserRouter>
+      </AuthProvider>
     </ChakraProvider>
   )
 }

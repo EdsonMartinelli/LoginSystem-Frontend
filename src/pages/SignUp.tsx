@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState} from 'react'
 import { useAxios } from '../hooks/useAxios'
-import { Button, Checkbox, Heading, VStack } from '@chakra-ui/react'
+import { Button, Checkbox, Heading, VStack} from '@chakra-ui/react'
 import { PasswordInput } from '../components/PasswordInput'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { TextInput } from '../components/TextInput'
@@ -18,23 +18,22 @@ export function SignUp(){
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
   const [isValidTerms, setIsValidTerms] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   function signupHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
- 
-    if(isValidEmail && isValidPassword && isValidUsername && isValidTerms){
-      useAxios.post('/signup', {
-          username:usernameRef.current?.value,
-          email: emailRef.current?.value,
-          password: passwordRef.current?.value
-        }).then(response => {
-          console.log(response.data)
-        }).catch(error => {
-          console.log(error.response.data)
-        })
-    } else {
-      console.log("Login error.")
-    }
+    setIsLoading(true)
+    useAxios.post('/signup', {
+        username:usernameRef.current?.value,
+        email: emailRef.current?.value,
+        password: passwordRef.current?.value
+      }).then(response => {
+        console.log(response.data)
+      }).catch(error => {
+        console.log(error.response.data)
+      }).finally(()=>{
+        setIsLoading(false)
+      })
   }
 
   return(
@@ -83,6 +82,7 @@ export function SignUp(){
                          isValidPassword &&
                          isValidUsername &&
                          isValidTerms) ? false : true}
+            isLoading = {isLoading}
           >
             Sign up
           </Button>

@@ -8,6 +8,7 @@ import { ConfirmEmail } from './pages/ConfirmEmail'
 import { AccountActivated } from './pages/AccountActivated'
 import { AnimatedAuthLeftToRight } from './animated/AnimatedAuthLeftToRight'
 import { AnimatedAuthRightToLeft } from './animated/AnimatedAuthRighToLeft'
+import { Profile } from './pages/Profile'
 
 /* 
    You need to wrap the entire app with AnimationPresence. The attribute 
@@ -23,20 +24,19 @@ import { AnimatedAuthRightToLeft } from './animated/AnimatedAuthRighToLeft'
 function AppRoutes() {
   const location = useLocation()
   return (
-    <AnimatePresence exitBeforeEnter>
-      <Routes location={location} key={location.pathname}>
-        <Route element={<AnimatedAuthRightToLeft />}> 
-          <Route path="/login" element={<Login orientation={'RightToLeft'}/>}/>
-          <Route path="/recover" element={<RecoverPassword />}/>
-        </Route>
-        <Route element={<AnimatedAuthLeftToRight />}> 
-          <Route path="/signup" element={<SignUp />}/>
-          <Route path="/active/:id" element={<ConfirmEmail />}/>
-          <Route path="/activated" element={<AccountActivated />}/>
-        </Route>
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </AnimatePresence>
+    <Routes location={location} key={location.pathname}>
+      <Route element={<AnimatedAuthRightToLeft />}> 
+        <Route path="/login" element={<Login orientation={'RightToLeft'}/>}/>
+        <Route path="/recover" element={<RecoverPassword />}/>
+      </Route>
+      <Route element={<AnimatedAuthLeftToRight />}> 
+        <Route path="/signup" element={<SignUp />}/>
+        <Route path="/active/:id" element={<ConfirmEmail />}/>
+        <Route path="/activated" element={<AccountActivated />}/>
+      </Route>
+      <Route path="/home" element={<Home />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   )
 }
 

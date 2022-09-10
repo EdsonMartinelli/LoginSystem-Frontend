@@ -13,10 +13,6 @@ export function AnimatedAuthRightToLeft(){
     navigate("/signup", { state: { orientation } } ) 
   }
 
-  function accountActivated() {
-    navigate("/activated", { state: { orientation } }) 
-  }
-
   return (
     <div className="content">      
       <motion.main 
@@ -24,23 +20,17 @@ export function AnimatedAuthRightToLeft(){
         initial={{opacity :0 }}
         animate={{opacity :1 }}
         exit={{opacity :0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
       >
           <Outlet />
       </motion.main>
       <motion.aside 
         className="image-content"
-        initial={{x: (orientation == previousOrientation) ? 0 : -500 }}
+        initial={{x: (orientation == previousOrientation || previousOrientation == undefined) ? 0 : -500 }}
         animate={{x: 0 }}
         exit={{x:0}}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
       >
-        <button 
-          className="image-content-button"
-          onClick={() => {accountActivated()}}
-        > 
-          Account Activated
-        </button>
         <button 
           className="image-content-button"
           onClick={() => {goToSignUp()}}
