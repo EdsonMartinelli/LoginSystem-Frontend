@@ -24,7 +24,7 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const {getUser} = useAuth()
+  const {userLogin} = useAuth()
   const navigate = useNavigate()
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
@@ -34,7 +34,7 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
         email: emailRef.current?.value,
         password: passwordRef.current?.value
       }
-      getUser(loginInfo)
+      userLogin(loginInfo)
         .then(() => {
           navigate("/profile")
         })

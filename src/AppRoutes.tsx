@@ -9,6 +9,7 @@ import { AccountActivated } from './pages/AccountActivated'
 import { AnimatedAuthLeftToRight } from './animated/AnimatedAuthLeftToRight'
 import { AnimatedAuthRightToLeft } from './animated/AnimatedAuthRighToLeft'
 import { Profile } from './pages/Profile'
+import { AuthGuard } from './guards/AuthGuard'
 
 /* 
    You need to wrap the entire app with AnimationPresence. The attribute 
@@ -25,17 +26,26 @@ function AppRoutes() {
   const location = useLocation()
   return (
     <Routes location={location} key={location.pathname}>
+
+      <Route path="/" element={<Home />} />
+
       <Route element={<AnimatedAuthRightToLeft />}> 
         <Route path="/login" element={<Login orientation={'RightToLeft'}/>}/>
         <Route path="/recover" element={<RecoverPassword />}/>
       </Route>
+
       <Route element={<AnimatedAuthLeftToRight />}> 
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/active/:id" element={<ConfirmEmail />}/>
         <Route path="/activated" element={<AccountActivated />}/>
       </Route>
-      <Route path="/home" element={<Home />} />
-      <Route path="/profile" element={<Profile />} />
+
+      <Route path="/profile" element={
+        <AuthGuard>
+          <Profile />
+        </AuthGuard>
+      } />
+
     </Routes>
   )
 }
