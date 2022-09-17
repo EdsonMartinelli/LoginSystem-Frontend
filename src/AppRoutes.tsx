@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
 import { Home } from './pages/Home/Home'
 import { SignUp } from './pages/SignUp'
 import { Login } from './pages/Login'
@@ -10,11 +9,9 @@ import { AnimatedAuthLeftToRight } from './animated/AnimatedAuthLeftToRight'
 import { AnimatedAuthRightToLeft } from './animated/AnimatedAuthRighToLeft'
 import { Profile } from './pages/Profile'
 import { AuthGuard } from './guards/AuthGuard'
+import { NoAuthGuard } from './guards/NoAuthGuard'
 
 /* 
-   You need to wrap the entire app with AnimationPresence. The attribute 
-   exitBeforeEnter will wait a render component finish the animetion for 
-   start another.
 
    You need to pass location, and key in Routes because frame-motion use 
    this information internally in page animation transition and others
@@ -30,21 +27,17 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
 
       <Route element={<AnimatedAuthRightToLeft />}> 
-        <Route path="/login" element={<Login orientation={'RightToLeft'}/>}/>
-        <Route path="/recover" element={<RecoverPassword />}/>
+        <Route path="/login" element={<NoAuthGuard><Login orientation={'RightToLeft'}/></NoAuthGuard>}/>
+        <Route path="/recover" element={<NoAuthGuard><RecoverPassword orientation={'RightToLeft'}/></NoAuthGuard>}/>
       </Route>
 
       <Route element={<AnimatedAuthLeftToRight />}> 
-        <Route path="/signup" element={<SignUp />}/>
-        <Route path="/active/:id" element={<ConfirmEmail />}/>
-        <Route path="/activated" element={<AccountActivated />}/>
+        <Route path="/signup" element={<NoAuthGuard><SignUp orientation={'LeftToRight'}/></NoAuthGuard>}/>
+        <Route path="/active/:id" element={<NoAuthGuard><ConfirmEmail /></NoAuthGuard>}/>
+        <Route path="/activated" element={<NoAuthGuard><AccountActivated /></NoAuthGuard>}/>
       </Route>
 
-      <Route path="/profile" element={
-        <AuthGuard>
-          <Profile />
-        </AuthGuard>
-      } />
+      <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
 
     </Routes>
   )

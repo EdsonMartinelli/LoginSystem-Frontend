@@ -1,14 +1,15 @@
 import { FormEvent, useRef, useState} from 'react'
 import { useAxios } from '../hooks/useAxios'
-import { Button, Checkbox, Heading, VStack} from '@chakra-ui/react'
+import { Button, Checkbox, Flex, Text, Heading, VStack} from '@chakra-ui/react'
 import { PasswordInput } from '../components/PasswordInput'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { TextInput } from '../components/TextInput'
 import { typeTextfieldRef } from '../constraints/types/TextFieldRef'
 import { usernameConsistency } from '../constraints/verifiers/usernameConsistency'
 import { emailConsistency } from '../constraints/verifiers/emailConsistency'
+import { typeOrientationAuthAnimation } from '../constraints/types/AnimatedAuth'
 
-export function SignUp(){
+export function SignUp({ orientation } : { orientation : typeOrientationAuthAnimation }){
 
   const usernameRef = useRef<typeTextfieldRef>(null)
   const emailRef = useRef<typeTextfieldRef>(null)
@@ -20,6 +21,8 @@ export function SignUp(){
   const [isValidTerms, setIsValidTerms] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const [formError, setFormError] = useState<string>("")
+
   function signupHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();
     setIsLoading(true)
@@ -30,7 +33,8 @@ export function SignUp(){
       }).then(response => {
         console.log(response.data)
       }).catch(error => {
-        console.log(error.response.data)
+        setFormError(error?.message || error.response.data.error)
+        console.log(error?.message || error.response.data.error)
       }).finally(()=>{
         setIsLoading(false)
       })
@@ -86,6 +90,11 @@ export function SignUp(){
           >
             Sign up
           </Button>
+          <Flex width="full" height="20px" align="center" justify="center">
+            <Text fontSize='sm' color='red.500'>
+              {formError}
+            </Text>
+          </Flex>
         </VStack>
       </form>
     </div>

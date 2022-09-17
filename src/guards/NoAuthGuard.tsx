@@ -6,13 +6,13 @@ type noAuthGuardProps = {
     children: ReactNode
 }
 
-export async function NoAuthGuard({children}: noAuthGuardProps){
+export function NoAuthGuard({children}: noAuthGuardProps){
     const { userValidate } = useAuth()
-    const [ canAccess, setCanAccess] = useState<boolean>(false)
+    const [ canAccess, setCanAccess ] = useState<boolean>(false)
     const navigate = useNavigate()
 
     useEffect(() => {
-        (async function teste() {
+        (async () => {
             try {
                 await userValidate()
                 navigate('/profile')

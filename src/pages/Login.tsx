@@ -1,11 +1,9 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Button,
-         Checkbox,
          Heading,
          VStack,
          Text,
          Flex,
-         Spacer,
          Link } from '@chakra-ui/react'
 import { FormEvent, useRef, useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -17,6 +15,7 @@ import { emailConsistency } from '../constraints/verifiers/emailConsistency'
 import { useAuth } from '../hooks/useAuth'
 
 export function Login({ orientation } : { orientation : typeOrientationAuthAnimation }){
+  
   const emailRef = useRef<typeTextfieldRef>(null)
   const passwordRef = useRef<typeTextfieldRef>(null)
 
@@ -24,11 +23,14 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const [formError, setFormError] = useState<string>("")
+
   const {userLogin} = useAuth()
   const navigate = useNavigate()
 
   function loginHandler(event: FormEvent<HTMLButtonElement>){
     event.preventDefault();   
+    setIsLoading(true)
     if( emailRef.current && passwordRef.current ){
       const loginInfo = { 
         email: emailRef.current?.value,
@@ -38,8 +40,8 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
         .then(() => {
           navigate("/profile")
         })
-        .catch(error => {
-          console.log(error)
+        .catch((error: any) => {
+          setFormError(error?.message)
         })
         .finally(() => {
           setIsLoading(false)
@@ -61,31 +63,27 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
             erroMessage="Invalid email."
             verifyFunction={emailConsistency}
           />
-          <PasswordInput
-            type='password' 
-            placeholder='Password'
-            reference={passwordRef}
-            isValidState={isValidPassword}
-            setIsValidState={setIsValidPassword}
-            erroMessage="Invalid password."
-          />
-          <Flex width="full" align="center" justify="center">
-            <Checkbox 
-              size='sm'
-            >
-              Remember me
-            </Checkbox>
-            <Spacer />
-            <Text fontSize='xs'>
-              <Link 
-                as={NavLink} 
-                to={{pathname:'/recover'}} 
-                state={{orientation}} 
-              >
-                Forgot your password?
-              </Link>
-            </Text>
-          </Flex>
+          <div>
+            <PasswordInput
+              type='password' 
+              placeholder='Password'
+              reference={passwordRef}
+              isValidState={isValidPassword}
+              setIsValidState={setIsValidPassword}
+              erroMessage="Invalid password."
+            />
+            <Flex width="full" height="22px" align="flex-end" justify="end">
+              <Text fontSize='xs' zIndex="2">
+                <Link 
+                  as={NavLink} 
+                  to={{pathname:'/recover'}} 
+                  state={{orientation}} 
+                >
+                  Forgot your password?
+                </Link>
+              </Text>
+            </Flex>
+          </div>
           <Button 
             colorScheme='blue'
             width='full'
@@ -96,6 +94,11 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
           >
             Login
           </Button>
+          <Flex width="full" height="20px" align="center" justify="center">
+            <Text fontSize='sm' color='red.500'>
+              {formError}
+            </Text>
+          </Flex>
         </VStack>
       </form>
     </div>

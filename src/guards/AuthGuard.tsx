@@ -12,7 +12,7 @@ export function AuthGuard({children}: authGuardProps){
     const navigate = useNavigate()
 
     useEffect(() => {
-        (async function teste() {
+        (async () => {
             try {
                 await userValidate()
                 setCanAccess(true)

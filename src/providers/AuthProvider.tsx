@@ -24,12 +24,12 @@ export const AuthContext = createContext<authContextProps>({} as authContextProp
 
 export function AuthProvider({children}: {children: ReactNode}){
 
-    const [user, setUser] = useState<User| undefined>(undefined)
+    const [user, setUser] = useState<User | undefined>(undefined)
 
     async function userLogin({email, password} : loginProps ) {
         const response = await useAxios.post('/login', { email, password })
 
-        if (response.status >= 400) throw new Error()
+        if (response.status >= 400) throw new Error("Email or password is incorrect.")
 
         localStorage.setItem("token_login_system", response.data.token)
         const decoded = jwt_decode(response.data.token) as User
@@ -50,14 +50,14 @@ export function AuthProvider({children}: {children: ReactNode}){
 
         if(!token) {
             userLogout()
-            throw new Error()
+            throw new Error("There is no token!")
         }
 
         const response = await useAxios.get('/revalidateToken')
 
         if (response.status >= 400) {
             userLogout()
-            throw new Error()
+            throw new Error("Token is expired or invalid!")
         }
             
         localStorage.setItem("token_login_system", response.data.token)
@@ -77,4 +77,3 @@ export function AuthProvider({children}: {children: ReactNode}){
     )
 
 }
-
