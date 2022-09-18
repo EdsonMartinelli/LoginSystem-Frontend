@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 // global instance config
 const instance = axios.create({
@@ -15,4 +15,8 @@ instance.defaults.headers = {
     patch: {}
 }
 
+
+/*instance.interceptors.request.use((config: AxiosRequestConfig) => {
+    
+})*/
 export const useAxios = instance;

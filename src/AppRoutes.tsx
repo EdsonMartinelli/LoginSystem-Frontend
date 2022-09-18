@@ -5,11 +5,12 @@ import { Login } from './pages/Login'
 import { RecoverPassword } from './pages/RecoverPassword'
 import { ConfirmEmail } from './pages/ConfirmEmail'
 import { AccountActivated } from './pages/AccountActivated'
-import { AnimatedAuthLeftToRight } from './animated/AnimatedAuthLeftToRight'
-import { AnimatedAuthRightToLeft } from './animated/AnimatedAuthRighToLeft'
 import { Profile } from './pages/Profile'
 import { AuthGuard } from './guards/AuthGuard'
 import { NoAuthGuard } from './guards/NoAuthGuard'
+import { AnimatedAuthRightToLeft } from './animations/AnimatedAuthRighToLeft'
+import { AnimatedAuthLeftToRight } from './animations/AnimatedAuthLeftToRight'
+import { LoginFormik } from './pages/LoginFormik'
 
 /* 
 
@@ -38,6 +39,11 @@ function AppRoutes() {
       </Route>
 
       <Route path="/profile" element={<AuthGuard><Profile /></AuthGuard>} />
+
+
+
+
+      <Route path="/test" element={<LoginFormik orientation={'RightToLeft'}/>} />
 
     </Routes>
   )
