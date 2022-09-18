@@ -9,10 +9,10 @@ import { useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import * as yup from 'yup';
-import { TextInputFormik } from '../components/TextFieldFormik'
 import { PasswordInputFormik } from '../components/PasswordInputFormik'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { typeOrientationAuthAnimation } from '../constraints/types/AnimatedAuth'
+import { TextInputFormik } from '../components/TextInputFormik'
 
 export function LoginFormik({ orientation } : { orientation : typeOrientationAuthAnimation }){
   

@@ -11,6 +11,7 @@ import { NoAuthGuard } from './guards/NoAuthGuard'
 import { AnimatedAuthRightToLeft } from './animations/AnimatedAuthRighToLeft'
 import { AnimatedAuthLeftToRight } from './animations/AnimatedAuthLeftToRight'
 import { LoginFormik } from './pages/LoginFormik'
+import { LoginFormikSimplified } from './pages/LoginFormikSimplified'
 
 /* 
 
@@ -44,7 +45,7 @@ function AppRoutes() {
 
 
       <Route path="/test" element={<LoginFormik orientation={'RightToLeft'}/>} />
-
+      <Route path="/test2" element={<LoginFormikSimplified orientation={'RightToLeft'}/>} />
     </Routes>
   )
 }
