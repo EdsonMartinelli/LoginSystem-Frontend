@@ -27,8 +27,9 @@ export function PasswordInputFormikSimplified( {name, ...propsWithType} : passwo
       <FormControl isInvalid={!!meta.error && meta.touched} height="45px">
         <InputGroup size='md'>
           <Field 
-            as={Input}
+            {...field}
             {...props}
+            as={Input}
             name={name}
             pr='4.5rem'
             type={passwordShow ? 'text' : 'password'}

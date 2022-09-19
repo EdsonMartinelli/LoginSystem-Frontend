@@ -12,6 +12,7 @@ import { AnimatedAuthRightToLeft } from './animations/AnimatedAuthRighToLeft'
 import { AnimatedAuthLeftToRight } from './animations/AnimatedAuthLeftToRight'
 import { LoginFormik } from './pages/LoginFormik'
 import { LoginFormikSimplified } from './pages/LoginFormikSimplified'
+import { SignUpFormikSimplified } from './pages/SignUpFormikSimplified'
 
 /* 
 
@@ -46,6 +47,7 @@ function AppRoutes() {
 
       <Route path="/test" element={<LoginFormik orientation={'RightToLeft'}/>} />
       <Route path="/test2" element={<LoginFormikSimplified orientation={'RightToLeft'}/>} />
+      <Route path="/test3" element={<SignUpFormikSimplified />} />
     </Routes>
   )
 }

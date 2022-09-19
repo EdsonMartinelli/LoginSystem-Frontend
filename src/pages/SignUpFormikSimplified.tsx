@@ -1,22 +1,32 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Link, VStack, Text, Button } from "@chakra-ui/react";
+import { Flex, Heading, VStack, Text, Button} from "@chakra-ui/react";
 import { Formik } from "formik"
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
 import * as yup from 'yup';
+import { CheckBoxFormikSimplified } from "../components/CheckBoxFormikSimplified";
 import { PasswordInputFormikSimplified } from "../components/PasswordInputFormikSimplified";
 import { TextInputFormikSimplified } from "../components/TextInputFormikSimplified";
-import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth";
-import { useAuth } from "../hooks/useAuth";
+import { useAxios } from "../hooks/useAxios";
 
-export function LoginFormikSimplified({ orientation } : { orientation : typeOrientationAuthAnimation }){
+type signUpProps = {
+    username: string,
+    email: string,
+    password: string,
+    terms: boolean
+}
 
-    const {userLogin} = useAuth()
-    const navigate = useNavigate()
+export function SignUpFormikSimplified(){
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [formError, setFormError] = useState<string>("")
 
     const validationSchema = yup.object().shape({
+        username: yup.
+                   string().
+                   min(3, "Username is too short!").
+                   max(20, "Username is too long!").
+                   required("Username is required!").
+                   strict(true),
         email: yup.
                    string().
                    email("Email is invalid!").
@@ -29,26 +39,26 @@ export function LoginFormikSimplified({ orientation } : { orientation : typeOrie
                     max(16, "Password is too long!").
                     matches(/^(\S+$)/g, "Password is invalid!").
                     required("Password is required!").
-                    strict(true)
+                    strict(true),
+
+        terms: yup.boolean().oneOf([true]),
     })
 
-    function loginHandler({email, password}: {email: string, password: string}) {
+    function loginHandler({ username, email, password, terms}: signUpProps) {
         setIsLoading(true)
-        if( email && password ){
-            const loginInfo = { 
-              email,
-              password
-            }
-            userLogin(loginInfo)
-              .then(() => {
-                navigate("/profile")
-              })
-              .catch((error: any) => {
-                setFormError(error?.message)
-              })
-              .finally(() => {
+        if( username && email && password && terms ){
+            useAxios.post('/signup', {
+                username,
+                email,
+                password
+            }).then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                setFormError(error?.message || error.response.data.error)
+                console.log(error?.message || error.response.data.error)
+            }).finally(()=>{
                 setIsLoading(false)
-              })
+            })
         }
     }
 
@@ -59,41 +69,34 @@ export function LoginFormikSimplified({ orientation } : { orientation : typeOrie
     return(
         <>
             <Formik 
-            initialValues={{ email: '', password: ''}}
-            onSubmit={(values) => {loginHandler(values)} }
-            validationSchema = {validationSchema}
+                initialValues={{ email: '', password: '', username: '', terms: false}}
+                onSubmit={(values) => {loginHandler(values)} }
+                validationSchema = {validationSchema}
             >
                 {({ handleSubmit, isValid, touched }) => (
                     <>
-                        <Heading height="60px">Login</Heading>
+                        <Heading height="60px">Sign Up</Heading>
                         <form onSubmit={handleSubmit}>
                             <VStack id="form-stack" width="full" spacing={8}>
                                 <TextInputFormikSimplified 
-                                    name='email'
+                                    name='username'
+                                    placeholder="Username"
                                 />
-                                <Flex width="full" flexDirection="column">
-                                    <PasswordInputFormikSimplified
-                                        name='password'
-                                    />
-                                    <Flex 
-                                        width="full" 
-                                        height="22px"
-                                        align="flex-end"
-                                        justify="end"
-                                    >
-                                        <Text fontSize='xs' zIndex="2">
-                                            <Link 
-                                                as={NavLink} 
-                                                to={{pathname:'/recover'}} 
-                                                state={{orientation}} 
-                                            >
-                                                Forgot your password?
-                                            </Link>
-                                        </Text>
-                                    </Flex>
-                                </Flex>
+                                <TextInputFormikSimplified 
+                                    name='email'
+                                    placeholder="Email"
+                                />
+                                <PasswordInputFormikSimplified
+                                    name='password'
+                                    placeholder="Password"
+                                />
+                                <CheckBoxFormikSimplified
+                                    name="terms"
+                                >
+                                    I agree with all Terms and Conditions
+                                </CheckBoxFormikSimplified>
                                 <Button 
-                                    colorScheme='blue'
+                                    colorScheme='red'
                                     width='full'
                                     rightIcon={<ArrowForwardIcon />}
                                     type="submit"
