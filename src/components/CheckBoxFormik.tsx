@@ -7,7 +7,7 @@ type checkBoxProps = InputProps & {
   children: ReactNode
 }
 
-export function CheckBoxFormikSimplified( {name, children, ...propsWithType} : checkBoxProps){
+export function CheckBoxFormik( {name, children, ...propsWithType} : checkBoxProps){
     const {type, ...props} = propsWithType
     const [field] = useField(name)
 

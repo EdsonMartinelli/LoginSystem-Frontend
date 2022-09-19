@@ -1,59 +1,76 @@
 import { Button, Flex, Text, Heading, VStack } from "@chakra-ui/react"
-import { FormEvent, useRef, useState } from "react"
-import { TextInput } from "../components/TextInput"
+import * as yup from 'yup'
+import { useState } from "react"
 import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth"
-import { typeTextfieldRef } from "../constraints/types/TextFieldRef"
-import { emailConsistency } from "../constraints/verifiers/emailConsistency"
+import { Formik } from "formik"
+import { TextInputFormik } from "../components/TextInputFormik"
 
 export function RecoverPassword({ orientation } : { orientation : typeOrientationAuthAnimation }) {
     
-    const emailRef = useRef<typeTextfieldRef>(null)
-    const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
     const [formError, setFormError] = useState<string>("")
 
-    function recoverPasswordHandler(event : FormEvent){
-        event.preventDefault()
+    const validationSchema = yup.object().shape({
+        email: yup.
+                   string().
+                   email("Email is invalid!").
+                   required("Email is required!").
+                   strict(true),
+    })
+
+    function recoverPasswordHandler({email} : {email: string}){
         setIsLoading(true)
-        setInterval(() => {
+        setTimeout(() => {
+            console.log(email)
             setIsLoading(false)
-            setFormError("falha")
+            setFormError("Fail")
         }, 3000)
     }
 
+    function verifyTouched(fields: {}) {
+        return Object.values(fields).some(value => {return !!value})
+    }
+
     return (
-        <div>
-            <Flex width="full" height="80px" align="flex-start" justify="center">
-                <Heading size='lg'>Recover Password</Heading>
-            </Flex>
-            <form>
-                <VStack id="form-stack" width="full" spacing={8}>          
-                    <TextInput
-                        type='email' 
-                        placeholder='Email'
-                        reference={emailRef}
-                        isValidState={isValidEmail}
-                        setIsValidState={setIsValidEmail}
-                        erroMessage="Invalid email."
-                        verifyFunction={emailConsistency}
-                    />
-                    <Button 
-                        colorScheme='blue'
-                        width='full'
-                        onClick={(event)=> recoverPasswordHandler(event)}
-                        isDisabled={(isValidEmail) ? false : true}
-                        isLoading = {isLoading}
-                    >
-                        Recover
-                    </Button>
-                    <Flex width="full" height="20px" align="center" justify="center">
-                        <Text fontSize='sm' color='red.500'>
-                        {formError}
-                        </Text>
-                    </Flex>
-                </VStack>
-            </form>
-        </div>
+        <>
+            <Formik 
+                initialValues={{ email: ''}}
+                onSubmit={(values) => {recoverPasswordHandler(values)} }
+                validationSchema = {validationSchema}
+            >
+                {({ handleSubmit, isValid, touched }) => (
+                    <>
+                        <Heading height="80px">Recover</Heading>
+                        <form onSubmit={handleSubmit}>
+                            <VStack id="form-stack" width="full" spacing={8}>
+                                <TextInputFormik 
+                                    name='email'
+                                />
+                                <Button 
+                                    colorScheme='blue'
+                                    width='full'
+                                    type="submit"
+                                    isDisabled={ isValid && 
+                                                 verifyTouched(touched) ? false : true}
+                                    isLoading = {isLoading}
+                                >
+                                    Recover
+                                </Button>
+                                <Flex 
+                                    width="full"
+                                    height="20px"
+                                    align="center"
+                                    justify="center"
+                                >
+                                    <Text fontSize='sm' color='red.500'>
+                                        {formError}
+                                    </Text>
+                                </Flex>
+                            </VStack>
+                        </form>
+                    </>
+                )}
+            </Formik>
+        </>
     )
 }

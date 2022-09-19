@@ -1,103 +1,127 @@
-import { FormEvent, useRef, useState} from 'react'
-import { useAxios } from '../hooks/useAxios'
-import { Button, Checkbox, Flex, Text, Heading, VStack} from '@chakra-ui/react'
-import { PasswordInput } from '../components/PasswordInput'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { TextInput } from '../components/TextInput'
-import { typeTextfieldRef } from '../constraints/types/TextFieldRef'
-import { usernameConsistency } from '../constraints/verifiers/usernameConsistency'
-import { emailConsistency } from '../constraints/verifiers/emailConsistency'
-import { typeOrientationAuthAnimation } from '../constraints/types/AnimatedAuth'
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Flex, Heading, VStack, Text, Button} from "@chakra-ui/react";
+import { Formik } from "formik"
+import { useState } from "react";
+import * as yup from 'yup';
+import { CheckBoxFormik } from "../components/CheckBoxFormik";
+import { PasswordInputFormik } from "../components/PasswordInputFormik";
+import { TextInputFormik } from "../components/TextInputFormik";
+import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth";
+import { useAxios } from "../hooks/useAxios";
+
+type signUpProps = {
+    username: string,
+    email: string,
+    password: string,
+    terms: boolean
+}
 
 export function SignUp({ orientation } : { orientation : typeOrientationAuthAnimation }){
 
-  const usernameRef = useRef<typeTextfieldRef>(null)
-  const emailRef = useRef<typeTextfieldRef>(null)
-  const passwordRef = useRef<typeTextfieldRef>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [formError, setFormError] = useState<string>("")
 
-  const [isValidUsername, setIsValidUsername] = useState<boolean>(false)
-  const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
-  const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
-  const [isValidTerms, setIsValidTerms] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+    const validationSchema = yup.object().shape({
+        username: yup.
+                   string().
+                   min(3, "Username is too short!").
+                   max(20, "Username is too long!").
+                   required("Username is required!").
+                   strict(true),
+        email: yup.
+                   string().
+                   email("Email is invalid!").
+                   required("Email is required!").
+                   strict(true),
 
-  const [formError, setFormError] = useState<string>("")
+        password: yup.
+                    string().
+                    min(8, "Password is too short!").
+                    max(16, "Password is too long!").
+                    matches(/^(\S+$)/g, "Password is invalid!").
+                    required("Password is required!").
+                    strict(true),
 
-  function signupHandler(event: FormEvent<HTMLButtonElement>){
-    event.preventDefault();
-    setIsLoading(true)
-    useAxios.post('/signup', {
-        username:usernameRef.current?.value,
-        email: emailRef.current?.value,
-        password: passwordRef.current?.value
-      }).then(response => {
-        console.log(response.data)
-      }).catch(error => {
-        setFormError(error?.message || error.response.data.error)
-        console.log(error?.message || error.response.data.error)
-      }).finally(()=>{
-        setIsLoading(false)
-      })
-  }
+        terms: yup.boolean().oneOf([true]),
+    })
 
-  return(
-    <div>
-      <Heading height="60px">Sign up</Heading>
-      <form>
-        <VStack id="form-stack" width="full" spacing={8}>    
-          <TextInput
-            type='text' 
-            placeholder='Username'
-            reference={usernameRef}
-            verifyFunction={usernameConsistency}
-            isValidState={isValidUsername}
-            setIsValidState={setIsValidUsername}
-            erroMessage="Invalid username."
-          />      
-          <TextInput
-            type='email' 
-            placeholder='Email'
-            reference={emailRef}
-            verifyFunction={emailConsistency}
-            isValidState={isValidEmail}
-            setIsValidState={setIsValidEmail}
-            erroMessage="Invalid email."
-          />
-          <PasswordInput
-            type='password' 
-            placeholder='Password'
-            reference={passwordRef}
-            isValidState={isValidPassword}
-            setIsValidState={setIsValidPassword}
-            erroMessage="Invalid password."
-          />
-          <Checkbox 
-            size='sm'
-            onChange={() => {setIsValidTerms(!isValidTerms)}}
-          >
-            I agree with all Terms and Conditions
-          </Checkbox>
-          <Button 
-            colorScheme='red'
-            width='full'
-            rightIcon={<ArrowForwardIcon />}
-            onClick={event=> signupHandler(event)}
-            isDisabled={(isValidEmail &&
-                         isValidPassword &&
-                         isValidUsername &&
-                         isValidTerms) ? false : true}
-            isLoading = {isLoading}
-          >
-            Sign up
-          </Button>
-          <Flex width="full" height="20px" align="center" justify="center">
-            <Text fontSize='sm' color='red.500'>
-              {formError}
-            </Text>
-          </Flex>
-        </VStack>
-      </form>
-    </div>
-  
-  )
+    function signUpHandler({ username, email, password, terms}: signUpProps) {
+        setIsLoading(true)
+        if( username && email && password && terms ){
+            useAxios.post('/signup', {
+                username,
+                email,
+                password
+            }).then(response => {
+                console.log(response.data)
+            }).catch(error => {
+                setFormError(error?.message || error.response.data.error)
+                console.log(error?.message || error.response.data.error)
+            }).finally(()=>{
+                setIsLoading(false)
+            })
+        }
+    }
+
+    function verifyTouched(fields: {}) {
+        return Object.values(fields).some(value => {return !!value})
+    }
+
+    return(
+        <>
+            <Formik 
+                initialValues={{ email: '', password: '', username: '', terms: false}}
+                onSubmit={(values) => {signUpHandler(values)} }
+                validationSchema = {validationSchema}
+            >
+                {({ handleSubmit, isValid, touched }) => (
+                    <>
+                        <Heading height="60px">Sign Up</Heading>
+                        <form onSubmit={handleSubmit}>
+                            <VStack id="form-stack" width="full" spacing={8}>
+                                <TextInputFormik
+                                    name='username'
+                                    placeholder="Username"
+                                />
+                                <TextInputFormik
+                                    name='email'
+                                    placeholder="Email"
+                                />
+                                <PasswordInputFormik
+                                    name='password'
+                                    placeholder="Password"
+                                />
+                                <CheckBoxFormik
+                                    name="terms"
+                                >
+                                    I agree with all Terms and Conditions
+                                </CheckBoxFormik>
+                                <Button 
+                                    colorScheme='red'
+                                    width='full'
+                                    rightIcon={<ArrowForwardIcon />}
+                                    type="submit"
+                                    isDisabled={ isValid && 
+                                                 verifyTouched(touched) ? false : true}
+                                    isLoading = {isLoading}
+                                >
+                                    Login
+                                </Button>
+                                <Flex 
+                                    width="full"
+                                    height="20px"
+                                    align="center"
+                                    justify="center"
+                                >
+                                    <Text fontSize='sm' color='red.500'>
+                                        {formError}
+                                    </Text>
+                                </Flex>
+                            </VStack>
+                        </form>
+                    </>
+                )}
+            </Formik>
+        </>
+    )
 }
