@@ -44,7 +44,7 @@ export function SignUpFormikSimplified(){
         terms: yup.boolean().oneOf([true]),
     })
 
-    function loginHandler({ username, email, password, terms}: signUpProps) {
+    function signUpHandler({ username, email, password, terms}: signUpProps) {
         setIsLoading(true)
         if( username && email && password && terms ){
             useAxios.post('/signup', {
@@ -70,7 +70,7 @@ export function SignUpFormikSimplified(){
         <>
             <Formik 
                 initialValues={{ email: '', password: '', username: '', terms: false}}
-                onSubmit={(values) => {loginHandler(values)} }
+                onSubmit={(values) => {signUpHandler(values)} }
                 validationSchema = {validationSchema}
             >
                 {({ handleSubmit, isValid, touched }) => (
