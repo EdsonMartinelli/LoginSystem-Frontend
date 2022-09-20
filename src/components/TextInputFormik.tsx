@@ -7,7 +7,7 @@ import { Button,
          InputProps,
          InputRightElement } from "@chakra-ui/react";
 import { Field, useField } from "formik";
-import { ChangeEvent} from "react";
+import { ChangeEvent } from "react";
 
 type textInputProps = InputProps & {
   name: string
@@ -16,9 +16,9 @@ type textInputProps = InputProps & {
 export function TextInputFormik( {name, type, ...props} : textInputProps){
     const [field, meta, helpers] = useField(name)
     
-    field.onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        helpers.setValue(e.target.value)
-        if (!meta.touched) helpers.setTouched(true) 
+    function touchOnChange(e: ChangeEvent<any>){
+      helpers.setTouched(true, true)
+      field.onChange(e)
     }
 
     return (
@@ -31,6 +31,7 @@ export function TextInputFormik( {name, type, ...props} : textInputProps){
             type={(type) ? type : "text"}
             name={name}
             pr='4.5rem'
+            onChange={touchOnChange}
           />
           <InputRightElement width='3rem'>
             <Button 

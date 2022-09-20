@@ -27,18 +27,16 @@ export function RecoverPassword({ orientation } : { orientation : typeOrientatio
         }, 3000)
     }
 
-    function verifyTouched(fields: {}) {
-        return Object.values(fields).some(value => {return !!value})
-    }
-
     return (
         <>
             <Formik 
                 initialValues={{ email: ''}}
                 onSubmit={(values) => {recoverPasswordHandler(values)} }
                 validationSchema = {validationSchema}
+                initialTouched = {{email: true}}
+                initialErrors = {{email:''}}
             >
-                {({ handleSubmit, isValid, touched }) => (
+                {({ handleSubmit, isValid, dirty }) => (
                     <>
                         <Heading height="40px">Forgot </Heading>
                         <Heading height="90px">Your Password?</Heading>
@@ -52,8 +50,7 @@ export function RecoverPassword({ orientation } : { orientation : typeOrientatio
                                     colorScheme='blue'
                                     width='full'
                                     type="submit"
-                                    isDisabled={ isValid && 
-                                                 verifyTouched(touched) ? false : true}
+                                    isDisabled={ isValid && dirty ? false : true}
                                     isLoading = {isLoading}
                                 >
                                     Recover

@@ -16,13 +16,13 @@ type passwordInputProps = InputProps & {
 export function PasswordInputFormik( {name, ...propsWithType} : passwordInputProps){
     const [passwordShow, setPasswordShow] = useState<boolean>(false)
     const {type, ...props} = propsWithType
-    const [field, meta, helpers] = useField(name)
-    
-    field.onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        helpers.setValue(e.target.value)
-        if (!meta.touched) helpers.setTouched(true) 
-    }
+    const [field, meta, helpers ] = useField(name)
 
+    function touchOnChange(e: ChangeEvent<any>){
+      helpers.setTouched(true, true)
+      field.onChange(e)
+    }
+    
     return (
       <FormControl isInvalid={!!meta.error && meta.touched} height="45px">
         <InputGroup size='md'>
@@ -33,6 +33,7 @@ export function PasswordInputFormik( {name, ...propsWithType} : passwordInputPro
             name={name}
             pr='4.5rem'
             type={passwordShow ? 'text' : 'password'}
+            onChange = {touchOnChange}
           />
           <InputRightElement width='3rem'>
             <Button 

@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, VStack, Text } from '@chakra-ui/react'
+import { Button, Flex, Heading, VStack, Text} from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { useState } from 'react'
 import * as yup from 'yup'
@@ -11,8 +11,8 @@ export function ConfirmEmail() {
     const validationSchema = yup.object().shape({
         code: yup.
                 string().
-                required().
-                length(6, `Code must have ${length}-digits`).
+                required("Code is required!").
+                length(6, `Code must have 6-digits`).
                 strict(true)
     })
 
@@ -25,18 +25,15 @@ export function ConfirmEmail() {
         }, 3000)
     }
 
-    function verifyTouched(fields: {}) {
-        return Object.values(fields).some(value => {return !!value})
-    }
-
     return (
         <>
             <Formik 
                 initialValues={{ code: ''}}
                 onSubmit={(values) => {confirmEmailHandler(values)} }
                 validationSchema = {validationSchema}
+                initialErrors = {{code:''}}
             >
-                {({ handleSubmit, isValid, touched }) => (
+                {({ handleSubmit, isValid, dirty }) => (
                     <>
                         <Heading height="40px">Confirm </Heading>
                         <Heading height="80px">Your Email</Heading>
@@ -51,11 +48,10 @@ export function ConfirmEmail() {
                                     colorScheme='red'
                                     width='full'
                                     type="submit"
-                                    isDisabled={ isValid && 
-                                                 verifyTouched(touched) ? false : true}
+                                    isDisabled={ isValid && dirty ? false : true}
                                     isLoading = {isLoading}
                                 >
-                                    {isValid.toString()}
+                                    Confirm
                                 </Button>
                                 <Flex 
                                     width="full"

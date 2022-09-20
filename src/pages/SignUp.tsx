@@ -63,18 +63,15 @@ export function SignUp({ orientation } : { orientation : typeOrientationAuthAnim
         }
     }
 
-    function verifyTouched(fields: {}) {
-        return Object.values(fields).some(value => {return !!value})
-    }
-
     return(
         <>
             <Formik 
-                initialValues={{ email: '', password: '', username: '', terms: false}}
+                initialValues={{ email: '', password: '', username: '', terms: false }}
                 onSubmit={(values) => {signUpHandler(values)} }
                 validationSchema = {validationSchema}
+                initialErrors = {{ email: '', password: '', username: '', terms: ""}}
             >
-                {({ handleSubmit, isValid, touched }) => (
+                {({ handleSubmit, isValid, dirty}) => (
                     <>
                         <Heading height="60px">Sign Up</Heading>
                         <form onSubmit={handleSubmit}>
@@ -101,8 +98,7 @@ export function SignUp({ orientation } : { orientation : typeOrientationAuthAnim
                                     width='full'
                                     rightIcon={<ArrowForwardIcon />}
                                     type="submit"
-                                    isDisabled={ isValid && 
-                                                 verifyTouched(touched) ? false : true}
+                                    isDisabled={ isValid && dirty ? false : true}
                                     isLoading = {isLoading}
                                 >
                                     Login

@@ -52,22 +52,20 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
         }
     }
 
-    function verifyTouched(fields: {}) {
-        return Object.values(fields).some(value => {return !!value})
-    }
 
     return(
         <>
             <Formik 
-            initialValues={{ email: '', password: ''}}
-            onSubmit={(values) => {loginHandler(values)} }
-            validationSchema = {validationSchema}
+                initialValues={{ email: '', password: ''}}
+                onSubmit={(values) => {loginHandler(values)} }
+                validationSchema = {validationSchema}
+                initialErrors = {{email:'', password:''}}
             >
-                {({ handleSubmit, isValid, touched }) => (
+                {({ handleSubmit, isValid, dirty }) => (
                     <>
                         <Heading height="60px">Login</Heading>
                         <form onSubmit={handleSubmit}>
-                            <VStack id="form-stack" width="full" spacing={8}>
+                            <VStack width="full" spacing={8}>
                                 <TextInputFormik 
                                     name='email'
                                 />
@@ -97,8 +95,7 @@ export function Login({ orientation } : { orientation : typeOrientationAuthAnima
                                     width='full'
                                     rightIcon={<ArrowForwardIcon />}
                                     type="submit"
-                                    isDisabled={ isValid && 
-                                                 verifyTouched(touched) ? false : true}
+                                    isDisabled={ isValid && dirty ? false : true}
                                     isLoading = {isLoading}
                                 >
                                     Login
