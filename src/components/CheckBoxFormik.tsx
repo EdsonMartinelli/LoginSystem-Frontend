@@ -1,14 +1,13 @@
-import { Checkbox, InputProps} from "@chakra-ui/react";
+import { Checkbox, InputProps, CheckboxProps} from "@chakra-ui/react";
 import { Field, useField } from "formik";
 import { ReactNode} from "react";
 
-type checkBoxProps = InputProps & {
+type checkBoxProps = CheckboxProps & {
   name: string,
   children: ReactNode
 }
 
-export function CheckBoxFormik( {name, children, ...propsWithType} : checkBoxProps){
-    const {type, ...props} = propsWithType
+export function CheckBoxFormik( {name, children, ...props} : checkBoxProps){
     const [field] = useField(name)
 
     return (

@@ -40,11 +40,13 @@ export function RecoverPassword({ orientation } : { orientation : typeOrientatio
             >
                 {({ handleSubmit, isValid, touched }) => (
                     <>
-                        <Heading height="80px">Recover</Heading>
+                        <Heading height="40px">Forgot </Heading>
+                        <Heading height="90px">Your Password?</Heading>
                         <form onSubmit={handleSubmit}>
-                            <VStack id="form-stack" width="full" spacing={8}>
+                            <VStack width="full" spacing={8}>
                                 <TextInputFormik 
                                     name='email'
+                                    placeholder='Email'
                                 />
                                 <Button 
                                     colorScheme='blue'
