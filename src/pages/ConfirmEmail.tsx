@@ -10,10 +10,10 @@ export function ConfirmEmail() {
 
     const validationSchema = yup.object().shape({
         code: yup.
-                   string().
-                   required("Code must have 6-digits").
-                   length(6, "Code must have 6-digits").
-                   strict(true)
+                string().
+                required().
+                length(6, `Code must have ${length}-digits`).
+                strict(true)
     })
 
     function confirmEmailHandler({code} : {code: string}){
