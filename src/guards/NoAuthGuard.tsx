@@ -2,29 +2,33 @@ import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-type noAuthGuardProps = {
-    children: ReactNode
+interface noAuthGuardProps {
+  children: ReactNode;
 }
 
-export function NoAuthGuard({children}: noAuthGuardProps){
-    const { userValidate } = useAuth()
-    const [ canAccess, setCanAccess ] = useState<boolean>(false)
-    const navigate = useNavigate()
+export function NoAuthGuard({ children }: noAuthGuardProps) {
+  const { userValidate } = useAuth();
+  const [canAccess, setCanAccess] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        (async () => {
-            try {
-                await userValidate()
-                navigate('/profile')
-            }catch(error){
-                setCanAccess(true)
-            }
-        })()
-    }, [])
+  useEffect(() => {
+    /* (async () => {
+      try {
+        await userValidate()
+        navigate('/profile')
+      } catch (error) {
+        setCanAccess(true)
+      }
+    })() */
 
-    return (
-        <div>
-            {canAccess && children}
-        </div>
-    )
+    userValidate()
+      .then(() => {
+        navigate("/profile");
+      })
+      .catch(() => {
+        setCanAccess(true);
+      });
+  }, []);
+
+  return <div>{canAccess && children}</div>;
 }

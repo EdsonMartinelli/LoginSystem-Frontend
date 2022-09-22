@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.prettierrc.json
+.eslintrc.json
+package-lock.json
+package.json
+tsconfig.json
+tsconfig.node.json
+*/vite-env.d.ts
+vite.config.ts
+tsconfig.json

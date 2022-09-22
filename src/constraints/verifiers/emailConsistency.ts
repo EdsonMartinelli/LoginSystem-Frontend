@@ -1,3 +1,3 @@
-export function emailConsistency(email: string) : boolean{
-    return /\S+@\S+\.\S+/.test(email)
+export function emailConsistency(email: string): boolean {
+  return /\S+@\S+\.\S+/.test(email);
 }
