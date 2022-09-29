@@ -54,28 +54,8 @@ export function SignUp({
   function signUpHandler({ username, email, password, terms }: signUpProps) {
     setIsLoading(true);
     if (username != null && email != null && password != null && terms) {
-
-      axiosInstance.user.signUp({
-        username,
-        email,
-        password,
-      })
-      .then((response) => {
-        console.log(response.data);
-        const userID = "sfasdf";
-        navigate(`/active/${userID}`, { state: { orientation } });
-      })
-      .catch((error) => {
-        //  setFormError(error.message || error.response.data.error)
-        //  console.log(error.message || error.response.data.error)
-        setFormError("Fail");
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-      /* useAxios
-        .post("/signup", {
+      axiosInstance.user
+        .signUp({
           username,
           email,
           password,
@@ -93,7 +73,7 @@ export function SignUp({
         })
         .finally(() => {
           setIsLoading(false);
-        }); */
+        });
     }
   }
 
