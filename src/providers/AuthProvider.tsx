@@ -26,9 +26,10 @@ export const AuthContext = createContext<authContextProps>(defaultValue);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | undefined>(undefined);
+  const axiosInstance = useAxios();
 
   async function userLogin({ email, password }: loginProps) {
-    const response = await useAxios.post("/login", { email, password });
+    const response = await axiosInstance.user.login({ email, password });
 
     if (response.status >= 400)
       throw new Error("Email or password is incorrect.");
@@ -56,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error("There is no token!");
     }
 
-    const response = await useAxios.get("/revalidateToken");
+    const response = await axiosInstance.user.revalidateToken();
 
     if (response.status >= 400) {
       userLogout();

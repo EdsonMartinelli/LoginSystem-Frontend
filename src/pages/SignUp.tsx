@@ -25,6 +25,7 @@ export function SignUp({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
+  const axiosInstance = useAxios();
 
   const validationSchema = yup.object().shape({
     username: yup
@@ -53,7 +54,27 @@ export function SignUp({
   function signUpHandler({ username, email, password, terms }: signUpProps) {
     setIsLoading(true);
     if (username != null && email != null && password != null && terms) {
-      useAxios
+
+      axiosInstance.user.signUp({
+        username,
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        const userID = "sfasdf";
+        navigate(`/active/${userID}`, { state: { orientation } });
+      })
+      .catch((error) => {
+        //  setFormError(error.message || error.response.data.error)
+        //  console.log(error.message || error.response.data.error)
+        setFormError("Fail");
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+      /* useAxios
         .post("/signup", {
           username,
           email,
@@ -65,14 +86,14 @@ export function SignUp({
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error) => {
-          /*  setFormError(error.message || error.response.data.error)
-        console.log(error.message || error.response.data.error) */
+          //  setFormError(error.message || error.response.data.error)
+          //  console.log(error.message || error.response.data.error)
           setFormError("Fail");
           console.log(error);
         })
         .finally(() => {
           setIsLoading(false);
-        });
+        }); */
     }
   }
 
