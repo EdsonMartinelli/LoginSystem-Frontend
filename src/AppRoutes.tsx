@@ -11,6 +11,7 @@ import { NoAuthGuard } from "./guards/NoAuthGuard";
 import { AnimatedAuthRightToLeft } from "./animations/AnimatedAuthRighToLeft";
 import { AnimatedAuthLeftToRight } from "./animations/AnimatedAuthLeftToRight";
 import { Page } from "./pages/InterestingThing/Page";
+import { Page2 } from "./pages/InterestingThing/Page2";
 
 /*
 
@@ -81,7 +82,9 @@ function AppRoutes() {
         }
       />
 
-      <Route path="/teste" element={<Page />} />
+      <Route path="/test" element={<Page />} />
+
+      <Route path="/test2" element={<Page2 />} />
     </Routes>
   );
 }
