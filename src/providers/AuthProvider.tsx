@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
-import { useAxios } from "../hooks/useAxios";
 import jwt_decode from "jwt-decode";
+import { APIServiceInstance } from "../services/APIService";
 
 interface User {
   id: string;
@@ -26,10 +26,10 @@ export const AuthContext = createContext<authContextProps>(defaultValue);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | undefined>(undefined);
-  const axiosInstance = useAxios();
+  const APIService = APIServiceInstance();
 
   async function userLogin({ email, password }: loginProps) {
-    const response = await axiosInstance.user.login({ email, password });
+    const response = await APIService.user.login({ email, password });
 
     if (response.status >= 400)
       throw new Error("Email or password is incorrect.");
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error("There is no token!");
     }
 
-    const response = await axiosInstance.user.revalidateToken();
+    const response = await APIService.user.revalidateToken();
 
     if (response.status >= 400) {
       userLogout();

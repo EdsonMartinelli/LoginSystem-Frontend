@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import {
-  typeOrientationAuthAnimation,
-  typeState,
-} from "../constraints/types/AnimatedAuth";
-
+import { typeOrientationAuthAnimation, typeState } from "../interfaces/AnimatedAuth";
 import "./AnimatedAuth.css";
 
 export function AnimatedAuthLeftToRight() {

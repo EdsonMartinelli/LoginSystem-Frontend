@@ -1,36 +1,13 @@
 import axios from "axios";
+import { loginRequestProps } from "../interfaces/API/LoginProps";
+import { signUpRequestProps } from "../interfaces/API/SignUpProps";
+import { validateEmailRequestProps } from "../interfaces/API/ValidateEmailProps";
 
-interface signUpProps {
-  username: string;
-  email: string;
-  password: string;
-}
 
-interface loginProps {
-  email: string;
-  password: string;
-}
-
-interface validateEmailProps {
-  id: string;
-  code: string;
-}
-
-export function useAxios() {
+export function APIServiceInstance() {
   const instance = axios.create({
     baseURL: "http://localhost:3000",
   });
-
-  // global instance config
-  instance.defaults.headers = {
-    common: {},
-    head: {},
-    get: {},
-    post: {},
-    put: {},
-    delete: {},
-    patch: {},
-  };
 
   instance.interceptors.request.use((request) => {
     const token = localStorage.getItem("token_login_system");
@@ -46,22 +23,22 @@ export function useAxios() {
     return response;
   });
 
-  const apiRequestRoutes = {
+  const APIRequestRoutes = {
     user: {
-      signUp: async (data: signUpProps) => {
+      signUp: async (data: signUpRequestProps) => {
         return await instance.post("/signup", data);
       },
-      login: async (data: loginProps) => {
+      login: async (data: loginRequestProps) => {
         return await instance.post("/login", data);
       },
       revalidateToken: async () => {
         return await instance.post("/revalidateToken");
       },
-      validateEmail: async ({ id, code }: validateEmailProps) => {
+      validateEmail: async ({ id, code }: validateEmailRequestProps) => {
         return await instance.patch(`/validateemail/${id}`, code);
       },
     },
   };
 
-  return apiRequestRoutes;
+  return APIRequestRoutes;
 }

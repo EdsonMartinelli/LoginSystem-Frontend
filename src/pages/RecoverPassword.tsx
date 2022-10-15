@@ -1,9 +1,9 @@
 import { Button, Flex, Text, Heading, VStack } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useState } from "react";
-import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth";
 import { Formik } from "formik";
 import { TextInputFormik } from "../components/TextInputFormik";
+import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
 
 export function RecoverPassword({
   orientation,

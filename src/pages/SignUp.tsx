@@ -7,8 +7,8 @@ import * as yup from "yup";
 import { CheckBoxFormik } from "../components/CheckBoxFormik";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
-import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth";
-import { useAxios } from "../hooks/useAxios";
+import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { APIServiceInstance } from '../services/APIService';
 
 interface signUpProps {
   username: string;
@@ -25,7 +25,7 @@ export function SignUp({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
-  const axiosInstance = useAxios();
+  const APIService = APIServiceInstance();
 
   const validationSchema = yup.object().shape({
     username: yup
@@ -54,18 +54,18 @@ export function SignUp({
   function signUpHandler({ username, email, password, terms }: signUpProps) {
     setIsLoading(true);
     if (username != null && email != null && password != null && terms) {
-      axiosInstance.user
+      APIService.user
         .signUp({
           username,
           email,
           password,
         })
-        .then((response) => {
+        .then((response: any) => {
           console.log(response.data);
           const userID = "sfasdf";
           navigate(`/active/${userID}`, { state: { orientation } });
         })
-        .catch((error) => {
+        .catch((error: any) => {
           //  setFormError(error.message || error.response.data.error)
           //  console.log(error.message || error.response.data.error)
           setFormError("Fail");

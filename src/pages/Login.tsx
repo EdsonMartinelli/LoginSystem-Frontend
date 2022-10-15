@@ -6,8 +6,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
-import { typeOrientationAuthAnimation } from "../constraints/types/AnimatedAuth";
 import { useAuth } from "../hooks/useAuth";
+import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
 
 export function Login({
   orientation,
