@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
@@ -11,16 +11,7 @@ export function AuthGuard({ children }: authGuardProps) {
   const [canAccess, setCanAccess] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    /* (async () => {
-      try {
-        await userValidate()
-        setCanAccess(true)
-      } catch (error) {
-        navigate('/')
-      }
-    })() */
-
+  useLayoutEffect(() => {
     userValidate()
       .then(() => {
         setCanAccess(true);

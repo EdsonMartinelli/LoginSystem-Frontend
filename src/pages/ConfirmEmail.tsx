@@ -1,10 +1,14 @@
 import { Button, Flex, Heading, VStack, Text } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { TextInputFormik } from "../components/TextInputFormik";
+import { APIServiceInstance } from "../services/APIService";
 
 export function ConfirmEmail() {
+  const APIService = APIServiceInstance();
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
 
@@ -18,11 +22,13 @@ export function ConfirmEmail() {
 
   function confirmEmailHandler({ code }: { code: string }) {
     setIsLoading(true);
-    setTimeout(() => {
-      console.log(code);
+    APIService.user.validateEmail({id: (id ?? ""), code}).then(response => {
+      console.log(response.message)
+    }).catch((error: any) => {
+      setFormError(error?.message)
+    }).finally(() => {
       setIsLoading(false);
-      setFormError("Fail");
-    }, 3000);
+    });
   }
 
   return (

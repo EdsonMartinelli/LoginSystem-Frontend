@@ -8,7 +8,7 @@ import { CheckBoxFormik } from "../components/CheckBoxFormik";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
-import { APIServiceInstance } from '../services/APIService';
+import { APIServiceInstance } from "../services/APIService";
 
 interface signUpProps {
   username: string;
@@ -66,10 +66,7 @@ export function SignUp({
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {
-          //  setFormError(error.message || error.response.data.error)
-          //  console.log(error.message || error.response.data.error)
-          setFormError("Fail");
-          console.log(error);
+          setFormError(error?.message)
         })
         .finally(() => {
           setIsLoading(false);
@@ -106,7 +103,7 @@ export function SignUp({
                   isDisabled={!(isValid && dirty)}
                   isLoading={isLoading}
                 >
-                  Login
+                  Sign Up
                 </Button>
                 <Flex
                   width="full"

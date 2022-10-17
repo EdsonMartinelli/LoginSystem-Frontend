@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { APIServiceInstance } from "../services/APIService";
+import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
 
 interface User {
   id: string;
@@ -29,19 +30,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const APIService = APIServiceInstance();
 
   async function userLogin({ email, password }: loginProps) {
-    const response = await APIService.user.login({ email, password });
-
-    if (response.status >= 400)
-      throw new Error("Email or password is incorrect.");
-
-    localStorage.setItem("token_login_system", response.data.token);
-    const decoded = jwt_decode(response.data.token);
-    const userDecode = decoded as User;
-    setUser({
-      id: userDecode.id,
-      username: userDecode.username,
-      email: userDecode.email,
-    });
+    try {
+      
+      const response = await APIService.user.login({ email, password });
+      localStorage.setItem("token_login_system", response.token);
+      console.log("entrou aqui")
+      const decoded = jwt_decode(response.token);
+      const userDecode = decoded as User;
+      setUser({
+        id: userDecode.id,
+        username: userDecode.username,
+        email: userDecode.email,
+      });
+    } catch (error: any ){
+      if ((error as APIErrorProps).message != null){
+        throw new Error((error as APIErrorProps).message);
+      }
+      throw new Error("Internal Error.");
+    }
   }
 
   function userLogout() {
@@ -56,22 +62,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       userLogout();
       throw new Error("There is no token!");
     }
-
-    const response = await APIService.user.revalidateToken();
-
-    if (response.status >= 400) {
+    try {
+      const response = await APIService.user.revalidateToken();
+      localStorage.setItem("token_login_system", response.token);
+      const decoded = jwt_decode(response.token);
+      const userDecode = decoded as User;
+      setUser({
+        id: userDecode.id,
+        username: userDecode.username,
+        email: userDecode.email,
+      });
+    } catch (error: any){
       userLogout();
-      throw new Error("Token is expired or invalid!");
+      if ((error as APIErrorProps).message != null){
+        throw new Error((error as APIErrorProps).message);
+      }
+      throw new Error("Internal Error.");
     }
-
-    localStorage.setItem("token_login_system", response.data.token);
-    const decoded = jwt_decode(response.data.token);
-    const userDecode = decoded as User;
-    setUser({
-      id: userDecode.id,
-      username: userDecode.username,
-      email: userDecode.email,
-    });
   }
 
   return (

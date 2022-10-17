@@ -27,48 +27,42 @@ function AppRoutes() {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
 
-      <Route element={<AnimatedAuthRightToLeft />}>
+      <Route element={<NoAuthGuard><AnimatedAuthRightToLeft /></NoAuthGuard>}>
         <Route
           path="/login"
           element={
-            <NoAuthGuard>
               <Login orientation={"RightToLeft"} />
-            </NoAuthGuard>
           }
         />
         <Route
           path="/recover"
           element={
-            <NoAuthGuard>
               <RecoverPassword orientation={"RightToLeft"} />
-            </NoAuthGuard>
           }
         />
       </Route>
 
-      <Route element={<AnimatedAuthLeftToRight />}>
+      <Route element={<NoAuthGuard><AnimatedAuthLeftToRight /></NoAuthGuard>}>
         <Route
           path="/signup"
           element={
-            <NoAuthGuard>
               <SignUp orientation={"LeftToRight"} />
-            </NoAuthGuard>
           }
         />
         <Route
           path="/active/:id"
           element={
-            <NoAuthGuard>
+
               <ConfirmEmail />
-            </NoAuthGuard>
+
           }
         />
         <Route
           path="/activated"
           element={
-            <NoAuthGuard>
+
               <AccountActivated />
-            </NoAuthGuard>
+
           }
         />
       </Route>
