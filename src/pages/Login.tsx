@@ -62,7 +62,8 @@ export function Login({
   }
 
   return (
-    <>
+    <div>
+      <Heading height="60px">Login</Heading>
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => {
@@ -73,7 +74,6 @@ export function Login({
       >
         {({ handleSubmit, isValid, dirty }) => (
           <>
-            <Heading height="60px">Login</Heading>
             <form onSubmit={handleSubmit}>
               <VStack width="full" spacing={8}>
                 <TextInputFormik name="email" placeholder="Email" />
@@ -121,6 +121,6 @@ export function Login({
           </>
         )}
       </Formik>
-    </>
+    </div>
   );
 }

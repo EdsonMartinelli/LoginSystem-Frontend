@@ -27,26 +27,26 @@ function AppRoutes() {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
 
-      <Route element={<NoAuthGuard><AnimatedAuthRightToLeft /></NoAuthGuard>}>
+      <Route element={<NoAuthGuard><AnimatedAuthLeftToRight /></NoAuthGuard>}>
         <Route
           path="/login"
           element={
-              <Login orientation={"RightToLeft"} />
+              <Login orientation={"LeftToRight"} />
           }
         />
         <Route
           path="/recover"
           element={
-              <RecoverPassword orientation={"RightToLeft"} />
+              <RecoverPassword orientation={"LeftToRight"} />
           }
         />
       </Route>
 
-      <Route element={<NoAuthGuard><AnimatedAuthLeftToRight /></NoAuthGuard>}>
+      <Route element={<NoAuthGuard><AnimatedAuthRightToLeft /></NoAuthGuard>}>
         <Route
           path="/signup"
           element={
-              <SignUp orientation={"LeftToRight"} />
+              <SignUp orientation={"RightToLeft"} />
           }
         />
         <Route

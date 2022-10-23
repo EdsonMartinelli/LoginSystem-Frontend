@@ -32,7 +32,9 @@ export function ConfirmEmail() {
   }
 
   return (
-    <>
+    <div>
+      <Heading height="40px">Confirm </Heading>
+      <Heading height="80px">Your Email</Heading>
       <Formik
         initialValues={{ code: "" }}
         onSubmit={(values) => {
@@ -43,8 +45,6 @@ export function ConfirmEmail() {
       >
         {({ handleSubmit, isValid, dirty }) => (
           <>
-            <Heading height="40px">Confirm </Heading>
-            <Heading height="80px">Your Email</Heading>
             <Text height="40px">Enter the code we sent to your email</Text>
             <form onSubmit={handleSubmit}>
               <VStack width="full" spacing={8}>
@@ -73,6 +73,6 @@ export function ConfirmEmail() {
           </>
         )}
       </Formik>
-    </>
+    </div>
   );
 }

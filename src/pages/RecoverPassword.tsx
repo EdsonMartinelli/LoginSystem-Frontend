@@ -31,7 +31,9 @@ export function RecoverPassword({
   }
 
   return (
-    <>
+    <div>
+      <Heading height="40px">Forgot </Heading>
+      <Heading height="90px">Your Password?</Heading>
       <Formik
         initialValues={{ email: "" }}
         onSubmit={(values) => {
@@ -42,8 +44,6 @@ export function RecoverPassword({
       >
         {({ handleSubmit, isValid, dirty }) => (
           <>
-            <Heading height="40px">Forgot </Heading>
-            <Heading height="90px">Your Password?</Heading>
             <form onSubmit={handleSubmit}>
               <VStack width="full" spacing={8}>
                 <TextInputFormik name="email" placeholder="Email" />
@@ -71,6 +71,6 @@ export function RecoverPassword({
           </>
         )}
       </Formik>
-    </>
+    </div>
   );
 }

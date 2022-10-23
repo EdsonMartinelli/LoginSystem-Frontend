@@ -12,43 +12,67 @@ export function AnimatedAuthLeftToRight() {
   const orientation: typeOrientationAuthAnimation = "LeftToRight";
   const previousOrientation = (location.state as typeState)?.orientation;
 
-  function goToLogin() {
-    navigate("/login", { state: { orientation } });
+  function goToSignUp() {
+    navigate("/signup", { state: { orientation } });
   }
 
   return (
     <div className="content">
-      <motion.aside
-        className="image-content"
-        initial={{
-          x:
-            orientation === previousOrientation ||
-            previousOrientation === undefined
-              ? 0
-              : 500,
+      <motion.main
+        className="outlet-content glass"
+        initial={{ 
+          opacity: 0,
+          borderTopLeftRadius: "10px",
+          borderTopRightRadius: "0px",
+          borderBottomRightRadius: "0px",
+          borderBottomLeftRadius: "10px",
         }}
-        animate={{ x: 0 }}
-        exit={{ x: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        <Outlet />
+      </motion.main>
+      <motion.aside
+        className="image-content glass"
+        initial={
+          (orientation === previousOrientation)||
+          previousOrientation === undefined ?
+          {
+            x : 0,
+            borderTopLeftRadius: "0px",
+            borderTopRightRadius: "10px",
+            borderBottomRightRadius: "10px",
+            borderBottomLeftRadius: "0px",
+          }
+          :
+          {
+            x: -450,
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "0px",
+            borderBottomRightRadius: "0px",
+            borderBottomLeftRadius: "10px",
+          }
+        }
+        animate={{
+          x: 0,
+          borderTopLeftRadius: "0px",
+          borderTopRightRadius: "10px",
+          borderBottomRightRadius: "10px",
+          borderBottomLeftRadius: "0px",
+        }}
+        exit={{ x: 0 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
       >
         <button
           className="image-content-button"
           onClick={() => {
-            goToLogin();
+            goToSignUp();
           }}
         >
-          Login
+          Sign Up
         </button>
       </motion.aside>
-      <motion.main
-        className="outlet-content"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
-      >
-        <Outlet />
-      </motion.main>
     </div>
   );
 }
