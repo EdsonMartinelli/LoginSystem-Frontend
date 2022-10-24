@@ -1,5 +1,5 @@
 .content {
-  background-color: #f1f1f1;
+  background: #f1f1f1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,10 +9,7 @@
 }
 
 .glass{
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4.5px );
-  -webkit-backdrop-filter: blur( 4.5px );
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.2 );
 }
 
 .outlet-content {
@@ -22,6 +19,9 @@
   justify-content: center;
   align-items: center;
   background: rgba( 255, 255, 255, 0.15 );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
 }
 
 .image-content {
@@ -31,11 +31,14 @@
   justify-content: center;
   align-items: center;
   z-index: 2;
-  background: rgba( 0, 0, 0, 1);
+  background: linear-gradient(#58a7d9, #b645e4);
 }
 
 .image-content-button {
-  background-color: #fff;
+  background-color: transparent;
   padding: 5px;
+  color: #f1f1f1;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 

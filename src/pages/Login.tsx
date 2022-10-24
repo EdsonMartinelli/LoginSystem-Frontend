@@ -17,6 +17,7 @@ export function Login({
   const { userLogin } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formError, setFormError] = useState<string>("");
 
   const validationSchema = yup.object().shape({
@@ -97,7 +98,7 @@ export function Login({
                   </Flex>
                 </Flex>
                 <Button
-                  colorScheme="blue"
+                  colorScheme="pink"
                   width="full"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
@@ -106,7 +107,7 @@ export function Login({
                 >
                   Login
                 </Button>
-                <Flex
+                {/* <Flex
                   width="full"
                   height="20px"
                   align="center"
@@ -115,7 +116,7 @@ export function Login({
                   <Text fontSize="sm" color="red.500">
                     {formError}
                   </Text>
-                </Flex>
+                </Flex> */}
               </VStack>
             </form>
           </>

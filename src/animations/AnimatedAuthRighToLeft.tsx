@@ -17,7 +17,7 @@ export function AnimatedAuthRightToLeft() {
   }
 
   return (
-    <div className="content">
+    <div className="content ">
       <motion.aside
         className="image-content glass"
         initial={
@@ -47,7 +47,7 @@ export function AnimatedAuthRightToLeft() {
           borderBottomLeftRadius: "10px",
         }}
         exit={{ x: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        transition={{ duration: 0.7}}
       >
         <button
           className="image-content-button"
@@ -69,7 +69,7 @@ export function AnimatedAuthRightToLeft() {
         }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
+        transition={{ duration: 0.7 }}
       >
         <Outlet />
       </motion.main>

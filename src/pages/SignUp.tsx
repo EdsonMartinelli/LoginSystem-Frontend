@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Flex, Heading, VStack, Text, Button } from "@chakra-ui/react";
+import { Heading, VStack, Button } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ export function SignUp({
   orientation: typeOrientationAuthAnimation;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
   const APIService = APIServiceInstance();
@@ -96,7 +97,7 @@ export function SignUp({
                   I agree with all Terms and Conditions
                 </CheckBoxFormik>
                 <Button
-                  colorScheme="red"
+                  colorScheme="pink"
                   width="full"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
@@ -105,7 +106,7 @@ export function SignUp({
                 >
                   Sign Up
                 </Button>
-                <Flex
+                {/* <Flex
                   width="full"
                   height="20px"
                   align="center"
@@ -114,7 +115,7 @@ export function SignUp({
                   <Text fontSize="sm" color="red.500">
                     {formError}
                   </Text>
-                </Flex>
+                </Flex> */}
               </VStack>
             </form>
           </>

@@ -1,4 +1,4 @@
-import { Button, Flex, Text, Heading, VStack } from "@chakra-ui/react";
+import { Button, Heading, VStack } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useState } from "react";
 import { Formik } from "formik";
@@ -11,7 +11,8 @@ export function RecoverPassword({
   orientation: typeOrientationAuthAnimation;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [formError, setFormError] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setFormError] = useState<string>("");
 
   const validationSchema = yup.object().shape({
     email: yup
@@ -48,7 +49,7 @@ export function RecoverPassword({
               <VStack width="full" spacing={8}>
                 <TextInputFormik name="email" placeholder="Email" />
                 <Button
-                  colorScheme="blue"
+                  colorScheme="pink"
                   width="full"
                   type="submit"
                   isDisabled={!(isValid && dirty)}
@@ -56,7 +57,7 @@ export function RecoverPassword({
                 >
                   Recover
                 </Button>
-                <Flex
+                {/* <Flex
                   width="full"
                   height="20px"
                   align="center"
@@ -65,7 +66,7 @@ export function RecoverPassword({
                   <Text fontSize="sm" color="red.500">
                     {formError}
                   </Text>
-                </Flex>
+                </Flex> */}
               </VStack>
             </form>
           </>

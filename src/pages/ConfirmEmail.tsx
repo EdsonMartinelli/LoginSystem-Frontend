@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, VStack, Text } from "@chakra-ui/react";
+import { Button, Heading, VStack, Text } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ export function ConfirmEmail() {
   const APIService = APIServiceInstance();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [formError, setFormError] = useState<string>("");
 
   const validationSchema = yup.object().shape({
@@ -50,7 +51,7 @@ export function ConfirmEmail() {
               <VStack width="full" spacing={8}>
                 <TextInputFormik name="code" placeholder="Code" />
                 <Button
-                  colorScheme="red"
+                  colorScheme="pink"
                   width="full"
                   type="submit"
                   isDisabled={!(isValid && dirty)}
@@ -58,7 +59,7 @@ export function ConfirmEmail() {
                 >
                   Confirm
                 </Button>
-                <Flex
+                {/* <Flex
                   width="full"
                   height="20px"
                   align="center"
@@ -67,7 +68,7 @@ export function ConfirmEmail() {
                   <Text fontSize="sm" color="red.500">
                     {formError}
                   </Text>
-                </Flex>
+                </Flex> */}
               </VStack>
             </form>
           </>

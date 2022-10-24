@@ -29,7 +29,7 @@ export function AnimatedAuthLeftToRight() {
         }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        transition={{ duration: 0.7 }}
       >
         <Outlet />
       </motion.main>
@@ -62,7 +62,7 @@ export function AnimatedAuthLeftToRight() {
           borderBottomLeftRadius: "0px",
         }}
         exit={{ x: 0 }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
+        transition={{ duration: 0.7 }}
       >
         <button
           className="image-content-button"
