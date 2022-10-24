@@ -8,8 +8,8 @@
   gap: 0px;
 }
 
-.glass{
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.2 );
+.glass {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
 }
 
 .outlet-content {
@@ -18,10 +18,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba( 255, 255, 255, 0.15 );
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
-  backdrop-filter: blur( 4.5px );
-  -webkit-backdrop-filter: blur( 4.5px );
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
 }
 
 .image-content {
@@ -41,4 +41,3 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
-

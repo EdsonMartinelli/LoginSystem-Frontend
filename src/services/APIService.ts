@@ -32,17 +32,22 @@ export function APIServiceInstance() {
     return request;
   });
 
-  instance.interceptors.response.use((response: AxiosResponse) => {
-    const responseData = (response.data as APIResponse).data;
-    return responseData;
-  } , async (error: AxiosError) => { 
-    if(error.response?.data != null) {
-      const responseError: APIErrorProps = (error.response.data as APIResponse).data
-      return await Promise.reject(responseError);
+  instance.interceptors.response.use(
+    (response: AxiosResponse) => {
+      const responseData = (response.data as APIResponse).data;
+      return responseData;
+    },
+    async (error: AxiosError) => {
+      if (error.response?.data != null) {
+        const responseError: APIErrorProps = (
+          error.response.data as APIResponse
+        ).data;
+        return await Promise.reject(responseError);
+      }
+      const responseNetworkError: APIErrorProps = { message: error.message };
+      return await Promise.reject(responseNetworkError);
     }
-    const responseNetworkError: APIErrorProps = { message: error.message }
-    return await Promise.reject(responseNetworkError);
-  });
+  );
 
   const APIRequestRoutes = {
     user: {
@@ -51,12 +56,10 @@ export function APIServiceInstance() {
       ): Promise<signUpResponseProps> => {
         return await instance.post("/signup", data);
       },
-      login: async (
-        data: loginRequestProps
-      ): Promise<loginResponseProps> => {
+      login: async (data: loginRequestProps): Promise<loginResponseProps> => {
         return await instance.post("/login", data);
       },
-      revalidateToken: async (): Promise< revalidateTokenResponseProps> => {
+      revalidateToken: async (): Promise<revalidateTokenResponseProps> => {
         return await instance.post("/revalidateToken");
       },
       validateEmail: async ({

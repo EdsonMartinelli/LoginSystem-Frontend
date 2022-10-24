@@ -1,17 +1,18 @@
-import { Button, Heading, VStack, Text } from "@chakra-ui/react";
+import { Heading, VStack, Text, useToast } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import * as yup from "yup";
+import { FormButton } from "../components/FormButton";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { APIServiceInstance } from "../services/APIService";
+import { errorToast } from "../utils/errorToast";
 
 export function ConfirmEmail() {
   const APIService = APIServiceInstance();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [formError, setFormError] = useState<string>("");
+  const toast = useToast();
 
   const validationSchema = yup.object().shape({
     code: yup
@@ -23,13 +24,17 @@ export function ConfirmEmail() {
 
   function confirmEmailHandler({ code }: { code: string }) {
     setIsLoading(true);
-    APIService.user.validateEmail({id: (id ?? ""), code}).then(response => {
-      console.log(response.message)
-    }).catch((error: any) => {
-      setFormError(error?.message)
-    }).finally(() => {
-      setIsLoading(false);
-    });
+    APIService.user
+      .validateEmail({ id: id ?? "", code })
+      .then((response) => {
+        console.log(response.message);
+      })
+      .catch((error: any) => {
+        toast(errorToast(error?.message));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -50,25 +55,14 @@ export function ConfirmEmail() {
             <form onSubmit={handleSubmit}>
               <VStack width="full" spacing={8}>
                 <TextInputFormik name="code" placeholder="Code" />
-                <Button
-                  colorScheme="pink"
+                <FormButton
                   width="full"
                   type="submit"
                   isDisabled={!(isValid && dirty)}
                   isLoading={isLoading}
                 >
                   Confirm
-                </Button>
-                {/* <Flex
-                  width="full"
-                  height="20px"
-                  align="center"
-                  justify="center"
-                >
-                  <Text fontSize="sm" color="red.500">
-                    {formError}
-                  </Text>
-                </Flex> */}
+                </FormButton>
               </VStack>
             </form>
           </>

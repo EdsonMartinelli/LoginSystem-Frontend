@@ -31,10 +31,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function userLogin({ email, password }: loginProps) {
     try {
-      
       const response = await APIService.user.login({ email, password });
       localStorage.setItem("token_login_system", response.token);
-      console.log("entrou aqui")
+      console.log("entrou aqui");
       const decoded = jwt_decode(response.token);
       const userDecode = decoded as User;
       setUser({
@@ -42,8 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         username: userDecode.username,
         email: userDecode.email,
       });
-    } catch (error: any ){
-      if ((error as APIErrorProps).message != null){
+    } catch (error: any) {
+      if ((error as APIErrorProps).message != null) {
         throw new Error((error as APIErrorProps).message);
       }
       throw new Error("Internal Error.");
@@ -72,9 +71,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         username: userDecode.username,
         email: userDecode.email,
       });
-    } catch (error: any){
+    } catch (error: any) {
       userLogout();
-      if ((error as APIErrorProps).message != null){
+      if ((error as APIErrorProps).message != null) {
         throw new Error((error as APIErrorProps).message);
       }
       throw new Error("Internal Error.");

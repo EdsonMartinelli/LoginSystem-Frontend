@@ -1,13 +1,15 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Flex, Heading, Link, VStack, Text, Button } from "@chakra-ui/react";
+import { Flex, Heading, Link, VStack, Text, useToast } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { useAuth } from "../hooks/useAuth";
 import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { errorToast } from "../utils/errorToast";
 
 export function Login({
   orientation,
@@ -17,8 +19,7 @@ export function Login({
   const { userLogin } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [formError, setFormError] = useState<string>("");
+  const toast = useToast();
 
   const validationSchema = yup.object().shape({
     email: yup
@@ -54,7 +55,7 @@ export function Login({
           navigate("/profile");
         })
         .catch((error: any) => {
-          setFormError(error?.message);
+          toast(errorToast(error?.message));
         })
         .finally(() => {
           setIsLoading(false);
@@ -97,8 +98,7 @@ export function Login({
                     </Text>
                   </Flex>
                 </Flex>
-                <Button
-                  colorScheme="pink"
+                <FormButton
                   width="full"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
@@ -106,17 +106,7 @@ export function Login({
                   isLoading={isLoading}
                 >
                   Login
-                </Button>
-                {/* <Flex
-                  width="full"
-                  height="20px"
-                  align="center"
-                  justify="center"
-                >
-                  <Text fontSize="sm" color="red.500">
-                    {formError}
-                  </Text>
-                </Flex> */}
+                </FormButton>
               </VStack>
             </form>
           </>

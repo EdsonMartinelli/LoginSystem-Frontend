@@ -1,6 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import {
-  Button,
   FormControl,
   FormErrorMessage,
   Input,
@@ -10,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, useField } from "formik";
 import { ChangeEvent } from "react";
+import { InputButton } from "./InputButton";
 
 type textInputProps = InputProps & {
   name: string;
@@ -37,17 +37,12 @@ export function TextInputFormik({ name, type, ...props }: textInputProps) {
           name={name}
           pr="4.5rem"
           onChange={touchOnChange}
+          paddingRight="3.5rem"
         />
         <InputRightElement width="3rem">
-          <Button
-            h="1.75rem"
-            size="sm"
-            onClick={() => {
-              helpers.setValue("");
-            }}
-          >
+          <InputButton click={() => helpers.setValue("")}>
             <CloseIcon />
-          </Button>
+          </InputButton>
         </InputRightElement>
       </InputGroup>
       <FormErrorMessage>{meta.error}</FormErrorMessage>

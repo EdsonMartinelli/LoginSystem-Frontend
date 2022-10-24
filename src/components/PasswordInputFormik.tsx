@@ -1,6 +1,5 @@
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
-  Button,
   FormControl,
   FormErrorMessage,
   Input,
@@ -10,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, useField } from "formik";
 import { ChangeEvent, useState } from "react";
+import { InputButton } from "./InputButton";
 
 type passwordInputProps = InputProps & {
   name: string;
@@ -42,17 +42,16 @@ export function PasswordInputFormik({
           pr="4.5rem"
           type={passwordShow ? "text" : "password"}
           onChange={touchOnChange}
+          paddingRight="3.5rem"
         />
         <InputRightElement width="3rem">
-          <Button
-            h="1.75rem"
-            size="sm"
-            onClick={() => {
+          <InputButton
+            click={() => {
               setPasswordShow(!passwordShow);
             }}
           >
             {passwordShow ? <ViewOffIcon /> : <ViewIcon />}
-          </Button>
+          </InputButton>
         </InputRightElement>
       </InputGroup>
       <FormErrorMessage>{meta.error}</FormErrorMessage>

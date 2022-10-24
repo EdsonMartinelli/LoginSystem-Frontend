@@ -1,14 +1,16 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { Heading, VStack, Button } from "@chakra-ui/react";
+import { Heading, useToast, VStack } from "@chakra-ui/react";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { CheckBoxFormik } from "../components/CheckBoxFormik";
+import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
 import { APIServiceInstance } from "../services/APIService";
+import { errorToast } from "../utils/errorToast";
 
 interface signUpProps {
   username: string;
@@ -23,8 +25,7 @@ export function SignUp({
   orientation: typeOrientationAuthAnimation;
 }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [formError, setFormError] = useState<string>("");
+  const toast = useToast();
   const navigate = useNavigate();
   const APIService = APIServiceInstance();
 
@@ -67,7 +68,7 @@ export function SignUp({
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {
-          setFormError(error?.message)
+          toast(errorToast(error?.message));
         })
         .finally(() => {
           setIsLoading(false);
@@ -96,8 +97,7 @@ export function SignUp({
                 <CheckBoxFormik name="terms">
                   I agree with all Terms and Conditions
                 </CheckBoxFormik>
-                <Button
-                  colorScheme="pink"
+                <FormButton
                   width="full"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
@@ -105,7 +105,7 @@ export function SignUp({
                   isLoading={isLoading}
                 >
                   Sign Up
-                </Button>
+                </FormButton>
                 {/* <Flex
                   width="full"
                   height="20px"

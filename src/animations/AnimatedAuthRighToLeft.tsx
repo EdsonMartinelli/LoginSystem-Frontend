@@ -21,33 +21,23 @@ export function AnimatedAuthRightToLeft() {
       <motion.aside
         className="image-content glass"
         initial={
-          (orientation === previousOrientation) ||
-          previousOrientation === undefined ?
-          {
-            x : 0,
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "0px",
-            borderBottomRightRadius: "0px",
-            borderBottomLeftRadius: "10px",
-          }
-          :
-          {
-            x: 450,
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "0px",
-            borderBottomRightRadius: "0px",
-            borderBottomLeftRadius: "10px",
-          }
+          orientation === previousOrientation ||
+          previousOrientation === undefined
+            ? {
+                x: 0,
+                borderRadius: "10px 0px 0px 10px",
+              }
+            : {
+                x: 450,
+                borderRadius: "0px 10px 10px 0px",
+              }
         }
-        animate={{ 
+        animate={{
           x: 0,
-          borderTopLeftRadius: "10px",
-          borderTopRightRadius: "0px",
-          borderBottomRightRadius: "0px",
-          borderBottomLeftRadius: "10px",
+          borderRadius: "10px 0px 0px 10px",
         }}
         exit={{ x: 0 }}
-        transition={{ duration: 0.7}}
+        transition={{ duration: 0.7 }}
       >
         <button
           className="image-content-button"
@@ -60,7 +50,7 @@ export function AnimatedAuthRightToLeft() {
       </motion.aside>
       <motion.main
         className="outlet-content glass"
-        initial={{ 
+        initial={{
           opacity: 0,
           borderTopLeftRadius: "0px",
           borderTopRightRadius: "10px",

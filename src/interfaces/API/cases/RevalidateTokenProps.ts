@@ -1,3 +1,3 @@
-export interface revalidateTokenResponseProps{
+export interface revalidateTokenResponseProps {
   token: string;
 }
