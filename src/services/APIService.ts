@@ -38,14 +38,19 @@ export function APIServiceInstance() {
       return responseData;
     },
     async (error: AxiosError) => {
-      if (error.response?.data != null) {
-        const responseError: APIErrorProps = (
-          error.response.data as APIResponse
-        ).data;
-        return await Promise.reject(responseError);
+      if (error.response?.status === 0) {
+        const responseNetworkError: APIErrorProps = {
+          message: "Internal Server Error!",
+          status: 500,
+        };
+        return await Promise.reject(responseNetworkError);
       }
-      const responseNetworkError: APIErrorProps = { message: error.message };
-      return await Promise.reject(responseNetworkError);
+      const responseError = (error.response?.data as APIResponse).data;
+      const responseAPIError: APIErrorProps = {
+        message: responseError?.message,
+        status: error.response?.status ?? 500,
+      };
+      return await Promise.reject(responseAPIError);
     }
   );
 

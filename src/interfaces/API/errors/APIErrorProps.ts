@@ -1,5 +1,4 @@
-import { APIResponseProps } from "../APIResponseProps";
-
-export interface APIErrorProps extends APIResponseProps {
+export interface APIErrorProps {
   message: string;
+  status: number;
 }

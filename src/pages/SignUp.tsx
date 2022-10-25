@@ -69,7 +69,12 @@ export function SignUp({
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {
-          toast(errorToast(error?.message));
+          toast(
+            errorToast({
+              message: error.message,
+              status: error.cause.status,
+            })
+          );
         })
         .finally(() => {
           setIsLoading(false);

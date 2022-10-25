@@ -1,8 +1,12 @@
 import { UseToastOptions } from "@chakra-ui/toast";
 
-export function errorToast(message: string) {
+interface errorToastProps {
+  message: string;
+  status: number;
+}
+export function errorToast({ message, status }: errorToastProps) {
   const errorToastOptions: UseToastOptions = {
-    title: "Error",
+    title: `Error ${status}`,
     description: message,
     status: "error",
     duration: 9000,

@@ -31,7 +31,12 @@ export function ConfirmEmail() {
         toast(successToast("Account validate with success"));
       })
       .catch((error: any) => {
-        toast(errorToast(error?.message));
+        toast(
+          errorToast({
+            message: error.message,
+            status: error.cause.status,
+          })
+        );
       })
       .finally(() => {
         setIsLoading(false);

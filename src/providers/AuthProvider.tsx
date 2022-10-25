@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { APIServiceInstance } from "../services/APIService";
-import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
+import { isAPIErrorProps } from "../utils/isAPIErrorProps";
 
 interface User {
   id: string;
@@ -42,10 +42,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email: userDecode.email,
       });
     } catch (error: any) {
-      if ((error as APIErrorProps).message != null) {
-        throw new Error((error as APIErrorProps).message);
+      if (isAPIErrorProps(error)) {
+        throw new Error(error.message, {
+          cause: {
+            status: error.status,
+          },
+        });
       }
-      throw new Error("Internal Error.");
+      throw new Error("Internal Error.", {
+        cause: {
+          status: 500,
+        },
+      });
     }
   }
 
@@ -73,10 +81,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
     } catch (error: any) {
       userLogout();
-      if ((error as APIErrorProps).message != null) {
-        throw new Error((error as APIErrorProps).message);
+      if (isAPIErrorProps(error)) {
+        throw new Error(error.message, {
+          cause: {
+            status: error.status,
+          },
+        });
       }
-      throw new Error("Internal Error.");
+      throw new Error("Internal Server Error.", {
+        cause: {
+          status: 500,
+        },
+      });
     }
   }
 
