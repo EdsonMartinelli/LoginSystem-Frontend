@@ -1,6 +1,6 @@
 export interface validateEmailRequestProps {
   id: string;
-  code: string;
+  emailToken: string;
 }
 
 export interface validateEmailResponseProps {

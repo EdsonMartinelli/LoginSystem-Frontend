@@ -11,6 +11,7 @@ import { TextInputFormik } from "../components/TextInputFormik";
 import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
 import { APIServiceInstance } from "../services/APIService";
 import { errorToast } from "../utils/errorToast";
+import { successToast } from "../utils/successToast";
 
 interface signUpProps {
   username: string;
@@ -63,8 +64,8 @@ export function SignUp({
           password,
         })
         .then((response: any) => {
-          console.log(response.data);
-          const userID = "sfasdf";
+          toast(successToast("Success in sign up!"));
+          const userID: string = response?.user?.id ?? "";
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {

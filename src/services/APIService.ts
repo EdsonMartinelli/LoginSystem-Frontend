@@ -64,9 +64,9 @@ export function APIServiceInstance() {
       },
       validateEmail: async ({
         id,
-        code,
+        emailToken,
       }: validateEmailRequestProps): Promise<validateEmailResponseProps> => {
-        return await instance.patch(`/validateemail/${id}`, code);
+        return await instance.patch(`/validateemail/${id}`, { emailToken });
       },
     },
   };

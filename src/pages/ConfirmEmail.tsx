@@ -7,6 +7,7 @@ import { FormButton } from "../components/FormButton";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { APIServiceInstance } from "../services/APIService";
 import { errorToast } from "../utils/errorToast";
+import { successToast } from "../utils/successToast";
 
 export function ConfirmEmail() {
   const APIService = APIServiceInstance();
@@ -25,9 +26,9 @@ export function ConfirmEmail() {
   function confirmEmailHandler({ code }: { code: string }) {
     setIsLoading(true);
     APIService.user
-      .validateEmail({ id: id ?? "", code })
+      .validateEmail({ id: id ?? "", emailToken: code })
       .then((response) => {
-        console.log(response.message);
+        toast(successToast("Account validate with success"));
       })
       .catch((error: any) => {
         toast(errorToast(error?.message));
