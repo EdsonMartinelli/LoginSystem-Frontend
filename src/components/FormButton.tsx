@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
+import { Button, ButtonProps, LightMode } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 interface FormButtonProps extends ButtonProps {
@@ -13,14 +13,16 @@ export function FormButton({
   ...props
 }: FormButtonProps) {
   return (
-    <Button
-      {...props}
-      bgColor="messenger.500"
-      color="gray.50"
-      isDisabled={isDisabled}
-      isLoading={isLoading}
-    >
-      {children}
-    </Button>
+    <LightMode>
+
+      <Button
+        {...props}
+        colorScheme="messenger"
+        isDisabled={isDisabled}
+        isLoading={isLoading}
+      >
+        {children}
+      </Button>
+    </LightMode>
   );
 }
