@@ -2,6 +2,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   FormControl,
   FormErrorMessage,
+  FormLabel,
   Input,
   InputGroup,
   InputProps,
@@ -13,9 +14,11 @@ import { InputButton } from "./InputButton";
 
 type passwordInputProps = InputProps & {
   name: string;
+  nameLabel: string;
 };
 
 export function PasswordInputFormik({
+  nameLabel,
   name,
   ...propsWithType
 }: passwordInputProps) {
@@ -29,10 +32,8 @@ export function PasswordInputFormik({
   }
 
   return (
-    <FormControl
-      isInvalid={!(meta.error == null) && meta.touched}
-      height="45px"
-    >
+    <FormControl isInvalid={!(meta.error == null) && meta.touched}>
+      <FormLabel>{nameLabel}</FormLabel>
       <InputGroup size="md">
         <Field
           {...field}
@@ -54,7 +55,7 @@ export function PasswordInputFormik({
           </InputButton>
         </InputRightElement>
       </InputGroup>
-      <FormErrorMessage>{meta.error}</FormErrorMessage>
+      <FormErrorMessage position="fixed">{meta.error}</FormErrorMessage>
     </FormControl>
   );
 }

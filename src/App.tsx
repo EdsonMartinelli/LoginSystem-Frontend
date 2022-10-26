@@ -1,8 +1,9 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./providers/AuthProvider";
 import AppRoutes from "./AppRoutes";
+import { theme } from "./theme/themeConfig";
 
 /*
 
@@ -14,7 +15,8 @@ import AppRoutes from "./AppRoutes";
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <AuthProvider>
         <BrowserRouter>
           <AnimatePresence exitBeforeEnter>

@@ -15,7 +15,8 @@ export function FormButton({
   return (
     <Button
       {...props}
-      colorScheme="pink"
+      bgColor="messenger.500"
+      color="gray.50"
       isDisabled={isDisabled}
       isLoading={isLoading}
     >

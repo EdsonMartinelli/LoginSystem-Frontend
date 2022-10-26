@@ -12,6 +12,7 @@ import { AnimatedAuthRightToLeft } from "./animations/AnimatedAuthRighToLeft";
 import { AnimatedAuthLeftToRight } from "./animations/AnimatedAuthLeftToRight";
 import { Page } from "./pages/InterestingThing/Page";
 import { Page2 } from "./pages/InterestingThing/Page2";
+import { Header } from "./components/Header";
 
 /*
 
@@ -25,49 +26,54 @@ function AppRoutes() {
   const location = useLocation();
   return (
     <Routes location={location} key={location.pathname}>
-      <Route path="/" element={<Home />} />
+      <Route element={<Header />}>
+        <Route path="/" element={<Home />} />
 
-      <Route
-        element={
-          <NoAuthGuard>
-            <AnimatedAuthLeftToRight />
-          </NoAuthGuard>
-        }
-      >
-        <Route path="/login" element={<Login orientation={"LeftToRight"} />} />
         <Route
-          path="/recover"
-          element={<RecoverPassword orientation={"LeftToRight"} />}
-        />
-      </Route>
+          element={
+            <NoAuthGuard>
+              <AnimatedAuthLeftToRight />
+            </NoAuthGuard>
+          }
+        >
+          <Route
+            path="/login"
+            element={<Login orientation={"LeftToRight"} />}
+          />
+          <Route
+            path="/recover"
+            element={<RecoverPassword orientation={"LeftToRight"} />}
+          />
+        </Route>
 
-      <Route
-        element={
-          <NoAuthGuard>
-            <AnimatedAuthRightToLeft />
-          </NoAuthGuard>
-        }
-      >
         <Route
-          path="/signup"
-          element={<SignUp orientation={"RightToLeft"} />}
+          element={
+            <NoAuthGuard>
+              <AnimatedAuthRightToLeft />
+            </NoAuthGuard>
+          }
+        >
+          <Route
+            path="/signup"
+            element={<SignUp orientation={"RightToLeft"} />}
+          />
+          <Route path="/active/:id" element={<ConfirmEmail />} />
+          <Route path="/activated" element={<AccountActivated />} />
+        </Route>
+
+        <Route
+          path="/profile"
+          element={
+            <AuthGuard>
+              <Profile />
+            </AuthGuard>
+          }
         />
-        <Route path="/active/:id" element={<ConfirmEmail />} />
-        <Route path="/activated" element={<AccountActivated />} />
+
+        <Route path="/test" element={<Page />} />
+
+        <Route path="/test2" element={<Page2 />} />
       </Route>
-
-      <Route
-        path="/profile"
-        element={
-          <AuthGuard>
-            <Profile />
-          </AuthGuard>
-        }
-      />
-
-      <Route path="/test" element={<Page />} />
-
-      <Route path="/test2" element={<Page2 />} />
     </Routes>
   );
 }

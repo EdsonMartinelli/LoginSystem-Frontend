@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { AsideContent } from "../components/AsideContent";
 import {
   typeOrientationAuthAnimation,
   typeState,
@@ -7,14 +8,9 @@ import {
 import "./AnimatedAuth.css";
 
 export function AnimatedAuthLeftToRight() {
-  const navigate = useNavigate();
   const location = useLocation();
   const orientation: typeOrientationAuthAnimation = "LeftToRight";
   const previousOrientation = (location.state as typeState)?.orientation;
-
-  function goToSignUp() {
-    navigate("/signup", { state: { orientation } });
-  }
 
   return (
     <div className="content">
@@ -43,7 +39,7 @@ export function AnimatedAuthLeftToRight() {
                 borderRadius: "0px 10px 10px 0px",
               }
             : {
-                x: -450,
+                x: -500,
                 borderRadius: "10px 0px 0px 10px",
               }
         }
@@ -54,14 +50,11 @@ export function AnimatedAuthLeftToRight() {
         exit={{ x: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <button
-          className="image-content-button"
-          onClick={() => {
-            goToSignUp();
-          }}
-        >
-          Sign Up
-        </button>
+        <AsideContent
+          buttonName="Sign Up"
+          path="/signup"
+          orientation={orientation}
+        />
       </motion.aside>
     </div>
   );

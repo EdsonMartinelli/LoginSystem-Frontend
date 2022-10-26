@@ -96,10 +96,25 @@ export function SignUp({
         {({ handleSubmit, isValid, dirty }) => (
           <>
             <form onSubmit={handleSubmit}>
-              <VStack id="form-stack" width="full" spacing={8}>
-                <TextInputFormik name="username" placeholder="Username" />
-                <TextInputFormik name="email" placeholder="Email" />
-                <PasswordInputFormik name="password" placeholder="Password" />
+              <VStack id="form-stack" width="full" spacing={7}>
+                <TextInputFormik
+                  nameLabel="Username"
+                  name="username"
+                  placeholder="Enter your Username"
+                />
+
+                <TextInputFormik
+                  nameLabel="Email"
+                  name="email"
+                  placeholder="Enter your Email"
+                />
+
+                <PasswordInputFormik
+                  nameLabel="Password"
+                  name="password"
+                  placeholder="Enter yourPassword"
+                />
+
                 <CheckBoxFormik name="terms">
                   I agree with all Terms and Conditions
                 </CheckBoxFormik>
@@ -112,16 +127,6 @@ export function SignUp({
                 >
                   Sign Up
                 </FormButton>
-                {/* <Flex
-                  width="full"
-                  height="20px"
-                  align="center"
-                  justify="center"
-                >
-                  <Text fontSize="sm" color="red.500">
-                    {formError}
-                  </Text>
-                </Flex> */}
               </VStack>
             </form>
           </>

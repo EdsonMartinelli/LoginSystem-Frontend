@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { AsideContent } from "../components/AsideContent";
 import {
   typeOrientationAuthAnimation,
   typeState,
@@ -7,14 +8,9 @@ import {
 import "./AnimatedAuth.css";
 
 export function AnimatedAuthRightToLeft() {
-  const navigate = useNavigate();
   const location = useLocation();
   const orientation: typeOrientationAuthAnimation = "RightToLeft";
   const previousOrientation = (location.state as typeState)?.orientation;
-
-  function goToLogin() {
-    navigate("/login", { state: { orientation } });
-  }
 
   return (
     <div className="content ">
@@ -28,7 +24,7 @@ export function AnimatedAuthRightToLeft() {
                 borderRadius: "10px 0px 0px 10px",
               }
             : {
-                x: 450,
+                x: 500,
                 borderRadius: "0px 10px 10px 0px",
               }
         }
@@ -39,14 +35,11 @@ export function AnimatedAuthRightToLeft() {
         exit={{ x: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <button
-          className="image-content-button"
-          onClick={() => {
-            goToLogin();
-          }}
-        >
-          Login
-        </button>
+        <AsideContent
+          buttonName="Log in"
+          path="/login"
+          orientation={orientation}
+        />
       </motion.aside>
       <motion.main
         className="outlet-content glass"

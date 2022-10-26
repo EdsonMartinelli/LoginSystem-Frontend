@@ -80,29 +80,32 @@ export function Login({
         initialErrors={{ email: "", password: "" }}
       >
         {({ handleSubmit, isValid, dirty }) => (
-          <>
-            <form onSubmit={handleSubmit}>
-              <VStack width="full" spacing={8}>
-                <TextInputFormik name="email" placeholder="Email" />
-                <Flex width="full" flexDirection="column">
-                  <PasswordInputFormik name="password" placeholder="Password" />
-                  <Flex
-                    width="full"
-                    height="22px"
-                    align="flex-end"
-                    justify="end"
-                  >
-                    <Text fontSize="xs" zIndex="2">
-                      <Link
-                        as={NavLink}
-                        to={{ pathname: "/recover" }}
-                        state={{ orientation }}
-                      >
-                        Forgot your password?
-                      </Link>
-                    </Text>
-                  </Flex>
+          <form onSubmit={handleSubmit}>
+            <VStack width="full" spacing={7}>
+              <TextInputFormik
+                nameLabel="Email"
+                name="email"
+                placeholder="Enter your Email"
+              />
+
+              <PasswordInputFormik
+                nameLabel="Password"
+                name="password"
+                placeholder="Enter your Password"
+              />
+              <VStack width="full" spacing={3}>
+                <Flex width="full" height="22px" align="flex-end" justify="end">
+                  <Text fontSize="xs" zIndex="2">
+                    <Link
+                      as={NavLink}
+                      to={{ pathname: "/recover" }}
+                      state={{ orientation }}
+                    >
+                      Forgot your password?
+                    </Link>
+                  </Text>
                 </Flex>
+
                 <FormButton
                   width="full"
                   rightIcon={<ArrowForwardIcon />}
@@ -113,8 +116,8 @@ export function Login({
                   Login
                 </FormButton>
               </VStack>
-            </form>
-          </>
+            </VStack>
+          </form>
         )}
       </Formik>
     </div>

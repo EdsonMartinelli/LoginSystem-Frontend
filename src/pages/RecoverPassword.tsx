@@ -44,8 +44,12 @@ export function RecoverPassword({
         {({ handleSubmit, isValid, dirty }) => (
           <>
             <form onSubmit={handleSubmit}>
-              <VStack width="full" spacing={8}>
-                <TextInputFormik name="email" placeholder="Email" />
+              <VStack width="full" spacing={10}>
+                <TextInputFormik
+                  nameLabel="Email"
+                  name="email"
+                  placeholder="Enter your Email"
+                />
                 <FormButton
                   width="full"
                   type="submit"

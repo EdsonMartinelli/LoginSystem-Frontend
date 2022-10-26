@@ -2,6 +2,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import {
   FormControl,
   FormErrorMessage,
+  FormLabel,
   Input,
   InputGroup,
   InputProps,
@@ -13,9 +14,15 @@ import { InputButton } from "./InputButton";
 
 type textInputProps = InputProps & {
   name: string;
+  nameLabel: string;
 };
 
-export function TextInputFormik({ name, type, ...props }: textInputProps) {
+export function TextInputFormik({
+  name,
+  nameLabel,
+  type,
+  ...props
+}: textInputProps) {
   const [field, meta, helpers] = useField(name);
 
   function touchOnChange(e: ChangeEvent<any>) {
@@ -24,10 +31,8 @@ export function TextInputFormik({ name, type, ...props }: textInputProps) {
   }
 
   return (
-    <FormControl
-      isInvalid={!(meta.error == null) && meta.touched}
-      height="45px"
-    >
+    <FormControl isInvalid={!(meta.error == null) && meta.touched}>
+      <FormLabel>{nameLabel}</FormLabel>
       <InputGroup size="md">
         <Field
           as={Input}
@@ -45,7 +50,7 @@ export function TextInputFormik({ name, type, ...props }: textInputProps) {
           </InputButton>
         </InputRightElement>
       </InputGroup>
-      <FormErrorMessage>{meta.error}</FormErrorMessage>
+      <FormErrorMessage position="fixed">{meta.error}</FormErrorMessage>
     </FormControl>
   );
 }

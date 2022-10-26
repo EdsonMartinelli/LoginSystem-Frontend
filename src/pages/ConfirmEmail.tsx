@@ -60,7 +60,11 @@ export function ConfirmEmail() {
             <Text height="40px">Enter the code we sent to your email</Text>
             <form onSubmit={handleSubmit}>
               <VStack width="full" spacing={8}>
-                <TextInputFormik name="code" placeholder="Code" />
+                <TextInputFormik
+                  nameLabel="Code"
+                  name="code"
+                  placeholder="Enter your Code"
+                />
                 <FormButton
                   width="full"
                   type="submit"
