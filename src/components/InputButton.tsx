@@ -8,7 +8,7 @@ interface InputButtonProps {
 
 export function InputButton({ click, children }: InputButtonProps) {
   return (
-    <Button h="1.75rem" size="sm" onClick={click}>
+    <Button h="1.75rem" size="sm" onClick={click} padding="0px" tabIndex={-1}>
       {children}
     </Button>
   );
