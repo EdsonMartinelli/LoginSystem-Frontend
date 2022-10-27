@@ -4,11 +4,12 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+
 import { CheckBoxFormik } from "../components/CheckBoxFormik";
 import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
-import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { useOrientation } from "../hooks/useOrientation";
 import { APIServiceInstance } from "../services/APIService";
 import { errorToast } from "../utils/errorToast";
 import { successToast } from "../utils/successToast";
@@ -20,15 +21,12 @@ interface signUpProps {
   terms: boolean;
 }
 
-export function SignUp({
-  orientation,
-}: {
-  orientation: typeOrientationAuthAnimation;
-}) {
+export function SignUp() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
   const navigate = useNavigate();
   const APIService = APIServiceInstance();
+  const { orientation } = useOrientation();
 
   const validationSchema = yup.object().shape({
     username: yup

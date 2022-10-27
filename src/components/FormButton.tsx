@@ -14,7 +14,6 @@ export function FormButton({
 }: FormButtonProps) {
   return (
     <LightMode>
-
       <Button
         {...props}
         colorScheme="messenger"

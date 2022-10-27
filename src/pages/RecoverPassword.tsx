@@ -3,14 +3,9 @@ import * as yup from "yup";
 import { useState } from "react";
 import { Formik } from "formik";
 import { TextInputFormik } from "../components/TextInputFormik";
-import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
 import { FormButton } from "../components/FormButton";
 
-export function RecoverPassword({
-  orientation,
-}: {
-  orientation: typeOrientationAuthAnimation;
-}) {
+export function RecoverPassword() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const validationSchema = yup.object().shape({

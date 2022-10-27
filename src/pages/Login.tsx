@@ -8,18 +8,15 @@ import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { useAuth } from "../hooks/useAuth";
-import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { useOrientation } from "../hooks/useOrientation";
 import { errorToast } from "../utils/errorToast";
 
-export function Login({
-  orientation,
-}: {
-  orientation: typeOrientationAuthAnimation;
-}) {
+export function Login() {
   const { userLogin } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
+  const { orientation } = useOrientation();
 
   const validationSchema = yup.object().shape({
     email: yup

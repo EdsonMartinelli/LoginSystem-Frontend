@@ -31,18 +31,12 @@ function AppRoutes() {
         <Route
           element={
             <NoAuthGuard>
-              <AuthController orientation={"LeftToRight"}/>
+              <AuthController orientation={"LeftToRight"} />
             </NoAuthGuard>
           }
         >
-          <Route
-            path="/login"
-            element={<Login orientation={"LeftToRight"} />}
-          />
-          <Route
-            path="/recover"
-            element={<RecoverPassword orientation={"LeftToRight"} />}
-          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/recover" element={<RecoverPassword />} />
         </Route>
 
         <Route
@@ -52,10 +46,7 @@ function AppRoutes() {
             </NoAuthGuard>
           }
         >
-          <Route
-            path="/signup"
-            element={<SignUp orientation={"RightToLeft"} />}
-          />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/active/:id" element={<ConfirmEmail />} />
           <Route path="/activated" element={<AccountActivated />} />
         </Route>

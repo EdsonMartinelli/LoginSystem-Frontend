@@ -7,7 +7,7 @@ import "./AnimatedAuth.css";
 export function AnimatedAuthLeftToRight({
   orientation,
   previousOrientation,
-  children
+  children,
 }: animatedAuthProps) {
   return (
     <div className="content">
@@ -55,5 +55,4 @@ export function AnimatedAuthLeftToRight({
       </motion.aside>
     </div>
   );
-
 }
