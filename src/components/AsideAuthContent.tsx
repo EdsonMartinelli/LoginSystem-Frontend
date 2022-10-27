@@ -8,7 +8,7 @@ interface asideContentProps {
   orientation: typeOrientationAuthAnimation;
 }
 
-export function AsideContent({
+export function AsideAuthContent({
   buttonName,
   path,
   orientation,

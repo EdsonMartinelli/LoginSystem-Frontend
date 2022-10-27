@@ -8,11 +8,10 @@ import { AccountActivated } from "./pages/AccountActivated";
 import { Profile } from "./pages/Profile";
 import { AuthGuard } from "./guards/AuthGuard";
 import { NoAuthGuard } from "./guards/NoAuthGuard";
-import { AnimatedAuthRightToLeft } from "./animations/AnimatedAuthRighToLeft";
-import { AnimatedAuthLeftToRight } from "./animations/AnimatedAuthLeftToRight";
 import { Page } from "./pages/InterestingThing/Page";
 import { Page2 } from "./pages/InterestingThing/Page2";
 import { Header } from "./components/Header";
+import { AuthController } from "./components/AuthController";
 
 /*
 
@@ -32,7 +31,7 @@ function AppRoutes() {
         <Route
           element={
             <NoAuthGuard>
-              <AnimatedAuthLeftToRight />
+              <AuthController orientation={"LeftToRight"}/>
             </NoAuthGuard>
           }
         >
@@ -49,7 +48,7 @@ function AppRoutes() {
         <Route
           element={
             <NoAuthGuard>
-              <AnimatedAuthRightToLeft />
+              <AuthController orientation={"RightToLeft"} />
             </NoAuthGuard>
           }
         >

@@ -1,17 +1,14 @@
 import { motion } from "framer-motion";
-import { Outlet, useLocation } from "react-router-dom";
-import { AsideContent } from "../components/AsideContent";
-import {
-  typeOrientationAuthAnimation,
-  typeState,
-} from "../interfaces/AnimatedAuth";
+import { AsideAuthContent } from "../components/AsideAuthContent";
+import { animatedAuthProps } from "../components/AuthController";
+
 import "./AnimatedAuth.css";
 
-export function AnimatedAuthLeftToRight() {
-  const location = useLocation();
-  const orientation: typeOrientationAuthAnimation = "LeftToRight";
-  const previousOrientation = (location.state as typeState)?.orientation;
-
+export function AnimatedAuthLeftToRight({
+  orientation,
+  previousOrientation,
+  children
+}: animatedAuthProps) {
   return (
     <div className="content">
       <motion.main
@@ -27,7 +24,7 @@ export function AnimatedAuthLeftToRight() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <Outlet />
+        {children}
       </motion.main>
       <motion.aside
         className="image-content glass"
@@ -50,7 +47,7 @@ export function AnimatedAuthLeftToRight() {
         exit={{ x: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <AsideContent
+        <AsideAuthContent
           buttonName="Sign Up"
           path="/signup"
           orientation={orientation}
@@ -58,4 +55,5 @@ export function AnimatedAuthLeftToRight() {
       </motion.aside>
     </div>
   );
+
 }
