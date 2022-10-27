@@ -11,7 +11,7 @@ import { NoAuthGuard } from "./guards/NoAuthGuard";
 import { Page } from "./pages/InterestingThing/Page";
 import { Page2 } from "./pages/InterestingThing/Page2";
 import { Header } from "./components/Header";
-import { AuthController } from "./components/AuthController";
+import { AuthController } from "./layouts/AuthController";
 
 /*
 

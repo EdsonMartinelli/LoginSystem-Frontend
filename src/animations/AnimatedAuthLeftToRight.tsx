@@ -1,33 +1,37 @@
 import { motion } from "framer-motion";
 import { AsideAuthContent } from "../components/AsideAuthContent";
-import { animatedAuthProps } from "../components/AuthController";
-
+import { animatedAuthProps } from "../layouts/AuthController";
 import "./AnimatedAuth.css";
 
 export function AnimatedAuthLeftToRight({
   orientation,
   previousOrientation,
+  size,
   children,
 }: animatedAuthProps) {
   return (
-    <div className="content">
+    <>
       <motion.main
-        className="outlet-content glass"
+        className="content outlet glass"
         initial={{
-          opacity: 0,
-          borderTopLeftRadius: "10px",
-          borderTopRightRadius: "0px",
-          borderBottomRightRadius: "0px",
-          borderBottomLeftRadius: "10px",
+          opacity: 1,
+          borderRadius: "10px 0px 0px 10px",
         }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.7 }}
       >
-        {children}
+        <motion.div
+          initial={{
+            opacity: 0,
+            borderRadius: "10px 0px 0px 10px",
+          }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 1 }}
+          transition={{ duration: 0.7 }}
+        >
+          {children}
+        </motion.div>
       </motion.main>
       <motion.aside
-        className="image-content glass"
+        className="content aside glass"
         initial={
           orientation === previousOrientation ||
           previousOrientation === undefined
@@ -36,7 +40,7 @@ export function AnimatedAuthLeftToRight({
                 borderRadius: "0px 10px 10px 0px",
               }
             : {
-                x: -500,
+                x: - (Math.round(size / 2)),
                 borderRadius: "10px 0px 0px 10px",
               }
         }
@@ -53,6 +57,6 @@ export function AnimatedAuthLeftToRight({
           orientation={orientation}
         />
       </motion.aside>
-    </div>
+    </>
   );
 }
