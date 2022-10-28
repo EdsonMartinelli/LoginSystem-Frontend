@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { AsideAuthContent } from "../components/AsideAuthContent";
-import { animatedAuthProps } from "../layouts/AuthController";
+import { animatedAuthProps } from "../pages/layouts/AuthController";
 import "./AnimatedAuth.css";
 
 export function AnimatedAuthRightToLeft({
@@ -49,6 +49,8 @@ export function AnimatedAuthRightToLeft({
           initial={{
             opacity: 0,
             borderRadius: "10px 0px 0px 10px",
+            width: "100%",
+            padding: "0px 90px 0px 90px",
           }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 1 }}

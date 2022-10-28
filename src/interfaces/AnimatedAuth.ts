@@ -1,5 +1,3 @@
-export type typeOrientationAuthAnimation = "LeftToRight" | "RightToLeft";
+export type orientationAuthAnimation = "LeftToRight" | "RightToLeft";
 
-export type typeState =
-  | { orientation: typeOrientationAuthAnimation }
-  | undefined;
+export type typeState = { orientation: orientationAuthAnimation } | undefined;

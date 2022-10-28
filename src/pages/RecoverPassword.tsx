@@ -26,8 +26,7 @@ export function RecoverPassword() {
 
   return (
     <div>
-      <Heading height="40px">Forgot </Heading>
-      <Heading height="90px">Your Password?</Heading>
+      <Heading height="120px">Forgot Your Password?</Heading>
       <Formik
         initialValues={{ email: "" }}
         onSubmit={(values) => {

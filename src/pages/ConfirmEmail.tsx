@@ -45,8 +45,7 @@ export function ConfirmEmail() {
 
   return (
     <div>
-      <Heading height="40px">Confirm </Heading>
-      <Heading height="80px">Your Email</Heading>
+      <Heading height="120px">Confirm Your Email</Heading>
       <Formik
         initialValues={{ code: "" }}
         onSubmit={(values) => {

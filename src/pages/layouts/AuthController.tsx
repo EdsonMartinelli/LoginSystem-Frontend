@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import { AnimatedAuthLeftToRight } from "../animations/AnimatedAuthLeftToRight";
-import { AnimatedAuthRightToLeft } from "../animations/AnimatedAuthRighToLeft";
+import { AnimatedAuthLeftToRight } from "../../animations/AnimatedAuthLeftToRight";
+import { AnimatedAuthRightToLeft } from "../../animations/AnimatedAuthRighToLeft";
 import {
-  typeOrientationAuthAnimation,
+  orientationAuthAnimation,
   typeState,
-} from "../interfaces/AnimatedAuth";
+} from "../../interfaces/AnimatedAuth";
 
 export interface animatedAuthProps {
-  orientation: typeOrientationAuthAnimation;
-  previousOrientation: typeOrientationAuthAnimation | undefined;
+  orientation: orientationAuthAnimation;
+  previousOrientation: orientationAuthAnimation | undefined;
   size: number;
   children: ReactNode;
 }
@@ -19,12 +19,12 @@ const CONTENT_SIZE = 1000;
 export function AuthController({
   orientation,
 }: {
-  orientation: typeOrientationAuthAnimation;
+  orientation: orientationAuthAnimation;
 }) {
   const location = useLocation();
   const previousOrientation = (location.state as typeState)?.orientation;
 
-  return(
+  return (
     <div
       id="background"
       style={{
@@ -44,8 +44,7 @@ export function AuthController({
           flexDirection: "row",
         }}
       >
-      { 
-        (orientation === "RightToLeft") ?
+        {orientation === "RightToLeft" ? (
           <AnimatedAuthRightToLeft
             orientation={orientation}
             previousOrientation={previousOrientation}
@@ -53,7 +52,7 @@ export function AuthController({
           >
             <Outlet context={{ orientation }} />
           </AnimatedAuthRightToLeft>
-        :
+        ) : (
           <AnimatedAuthLeftToRight
             orientation={orientation}
             previousOrientation={previousOrientation}
@@ -61,8 +60,8 @@ export function AuthController({
           >
             <Outlet context={{ orientation }} />
           </AnimatedAuthLeftToRight>
-      }
+        )}
       </div>
     </div>
-  )
+  );
 }

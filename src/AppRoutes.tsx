@@ -11,7 +11,8 @@ import { NoAuthGuard } from "./guards/NoAuthGuard";
 import { Page } from "./pages/InterestingThing/Page";
 import { Page2 } from "./pages/InterestingThing/Page2";
 import { Header } from "./components/Header";
-import { AuthController } from "./layouts/AuthController";
+import { AuthController } from "./pages/layouts/AuthController";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 /*
 
@@ -64,6 +65,8 @@ function AppRoutes() {
 
         <Route path="/test2" element={<Page2 />} />
       </Route>
+
+      <Route path="/*" element={<NotFoundPage />} />
     </Routes>
   );
 }
