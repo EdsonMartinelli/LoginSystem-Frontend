@@ -13,21 +13,32 @@ export function AnimatedAuthLeftToRight({
     <>
       <motion.main
         className="content outlet glass"
-        initial={{
-          opacity: 1,
+        style={{
           borderRadius: "10px 0px 0px 10px",
         }}
+        initial={{
+          opacity: 0,
+          x: Math.round(size / 8),
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        exit={{
+          opacity: 0,
+          x: Math.round(size / 2),
+        }}
+        transition={{ duration: 0.7 }}
       >
         <motion.div
-          initial={{
-            opacity: 0,
-            borderRadius: "10px 0px 0px 10px",
+          style={{
             width: "100%",
-            padding: "0px 90px 0px 90px",
+            padding: "0px 90px",
           }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 1 }}
-          transition={{ duration: 0.7 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
         >
           {children}
         </motion.div>

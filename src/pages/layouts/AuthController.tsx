@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { AnimatedAuthLeftToRight } from "../../animations/AnimatedAuthLeftToRight";
@@ -23,26 +24,22 @@ export function AuthController({
 }) {
   const location = useLocation();
   const previousOrientation = (location.state as typeState)?.orientation;
-
+  console.log(window.innerWidth);
   return (
-    <div
+    <Box
       id="background"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "calc(100vh - 48px)",
-      }}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="100%"
+      height="calc(100vh - 48px)"
     >
-      <div
+      <Box
         id="content"
-        style={{
-          display: "flex",
-          width: `${CONTENT_SIZE}px`,
-          height: "65%",
-          flexDirection: "row",
-        }}
+        display="flex"
+        width={`${CONTENT_SIZE}px`}
+        height="65%"
+        flexDirection="row"
       >
         {orientation === "RightToLeft" ? (
           <AnimatedAuthRightToLeft
@@ -61,7 +58,18 @@ export function AuthController({
             <Outlet context={{ orientation }} />
           </AnimatedAuthLeftToRight>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
+
+/*
+id="background"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "calc(100vh - 48px)",
+      }}
+*/

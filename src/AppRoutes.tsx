@@ -13,61 +13,55 @@ import { Page2 } from "./pages/InterestingThing/Page2";
 import { Header } from "./components/Header";
 import { AuthController } from "./pages/layouts/AuthController";
 import { NotFoundPage } from "./pages/NotFoundPage";
-
-/*
-
-   You need to pass location, and key in Routes because frame-motion use
-   this information internally in page animation transition and others
-   animations.
-
-*/
+import { AnimatePresence } from "framer-motion";
 
 function AppRoutes() {
   const location = useLocation();
   return (
-    <Routes location={location} key={location.pathname}>
-      <Route element={<Header />}>
-        <Route path="/" element={<Home />} />
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route element={<Header />}>
+          <Route path="/" element={<Home />} />
+          <Route
+            element={
+              <NoAuthGuard>
+                <AuthController orientation={"LeftToRight"} />
+              </NoAuthGuard>
+            }
+          >
+            <Route path="/login" element={<Login />} />
+            <Route path="/recover" element={<RecoverPassword />} />
+          </Route>
 
-        <Route
-          element={
-            <NoAuthGuard>
-              <AuthController orientation={"LeftToRight"} />
-            </NoAuthGuard>
-          }
-        >
-          <Route path="/login" element={<Login />} />
-          <Route path="/recover" element={<RecoverPassword />} />
+          <Route
+            element={
+              <NoAuthGuard>
+                <AuthController orientation={"RightToLeft"} />
+              </NoAuthGuard>
+            }
+          >
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/active/:id" element={<ConfirmEmail />} />
+            <Route path="/activated" element={<AccountActivated />} />
+          </Route>
+
+          <Route
+            path="/profile"
+            element={
+              <AuthGuard>
+                <Profile />
+              </AuthGuard>
+            }
+          />
+
+          <Route path="/test" element={<Page />} />
+
+          <Route path="/test2" element={<Page2 />} />
         </Route>
 
-        <Route
-          element={
-            <NoAuthGuard>
-              <AuthController orientation={"RightToLeft"} />
-            </NoAuthGuard>
-          }
-        >
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/active/:id" element={<ConfirmEmail />} />
-          <Route path="/activated" element={<AccountActivated />} />
-        </Route>
-
-        <Route
-          path="/profile"
-          element={
-            <AuthGuard>
-              <Profile />
-            </AuthGuard>
-          }
-        />
-
-        <Route path="/test" element={<Page />} />
-
-        <Route path="/test2" element={<Page2 />} />
-      </Route>
-
-      <Route path="/*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="/*" element={<NotFoundPage />} />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
