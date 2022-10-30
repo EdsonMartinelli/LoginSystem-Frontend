@@ -1,8 +1,8 @@
 import { useOutletContext } from "react-router-dom";
-import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { orientationAuthAnimation } from "../interfaces/AnimatedAuth";
 
 interface ContextType {
-  orientation: typeOrientationAuthAnimation | undefined;
+  orientation: orientationAuthAnimation | undefined;
 }
 
 export function useOrientation() {

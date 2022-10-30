@@ -1,5 +1,4 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Home } from "./pages/Home/Home";
 import { SignUp } from "./pages/SignUp";
 import { Login } from "./pages/Login";
 import { RecoverPassword } from "./pages/RecoverPassword";
@@ -14,6 +13,7 @@ import { Header } from "./components/Header";
 import { AuthController } from "./pages/layouts/AuthController";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { AnimatePresence } from "framer-motion";
+import { Home } from "./pages/Home";
 
 function AppRoutes() {
   const location = useLocation();

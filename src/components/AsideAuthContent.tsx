@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { typeOrientationAuthAnimation } from "../interfaces/AnimatedAuth";
+import { orientationAuthAnimation } from "../interfaces/AnimatedAuth";
 
 interface asideContentProps {
   buttonName: string;
   path: string;
-  orientation: typeOrientationAuthAnimation;
+  orientation: orientationAuthAnimation;
 }
 
 export function AsideAuthContent({
