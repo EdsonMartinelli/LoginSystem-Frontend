@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorMode } from "@chakra-ui/react";
 import { motion, MotionConfig } from "framer-motion";
 import { CSSProperties, ReactNode } from "react";
 import { AsideAuthContent } from "../../../components/AsideAuthContent";
@@ -17,16 +17,7 @@ const contentStyle: CSSProperties = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  boxShadow: "box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);",
-};
-
-const outletStyle: CSSProperties = {
-  border: "1px solid rgba(255, 255, 255, 0.18)",
-};
-
-const asideStyle: CSSProperties = {
-  zIndex: "2",
-  overflow: "hidden",
+  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
 };
 
 export function AuthAnimation({
@@ -34,6 +25,9 @@ export function AuthAnimation({
   previousOrientation,
   children,
 }: animatedAuthProps) {
+
+  const { colorMode } = useColorMode();
+
   return (
     <Box
       id="content"
@@ -46,7 +40,7 @@ export function AuthAnimation({
         <motion.main
           style={{
             ...contentStyle,
-            ...outletStyle,
+            border: `1px solid rgba${(colorMode === "dark" ? "(255, 255, 255, 0.18)" : "(0, 0, 0, 0.18)")}` ,
             borderRadius:
               orientation === "LeftToRight"
                 ? "10px 0px 0px 10px"
@@ -75,7 +69,11 @@ export function AuthAnimation({
         </motion.main>
 
         <motion.aside
-          style={{ ...contentStyle, ...asideStyle }}
+          style={{ 
+            ...contentStyle,
+            zIndex: "2",
+            overflow: "hidden"
+          }}
           initial={
             orientation === previousOrientation ||
             previousOrientation === undefined
