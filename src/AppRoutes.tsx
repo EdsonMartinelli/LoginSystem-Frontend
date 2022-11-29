@@ -7,10 +7,8 @@ import { AccountActivated } from "./pages/AccountActivated";
 import { Profile } from "./pages/Profile";
 import { AuthGuard } from "./guards/AuthGuard";
 import { NoAuthGuard } from "./guards/NoAuthGuard";
-import { Page } from "./pages/InterestingThing/Page";
-import { Page2 } from "./pages/InterestingThing/Page2";
 import { Header } from "./components/Header";
-import { AuthController } from "./pages/layouts/AuthController";
+import { AuthController } from "./pages/layouts/auth/AuthController";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { AnimatePresence } from "framer-motion";
 import { Home } from "./pages/Home";
@@ -53,10 +51,6 @@ function AppRoutes() {
               </AuthGuard>
             }
           />
-
-          <Route path="/test" element={<Page />} />
-
-          <Route path="/test2" element={<Page2 />} />
         </Route>
 
         <Route path="/*" element={<NotFoundPage />} />
