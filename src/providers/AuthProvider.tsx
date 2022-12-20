@@ -33,7 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await APIService.user.login({ email, password });
       localStorage.setItem("token_login_system", response.token);
-      console.log("entrou aqui");
       const decoded = jwt_decode(response.token);
       const userDecode = decoded as User;
       setUser({

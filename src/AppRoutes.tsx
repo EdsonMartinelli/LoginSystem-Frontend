@@ -8,10 +8,10 @@ import { Profile } from "./pages/Profile";
 import { AuthGuard } from "./guards/AuthGuard";
 import { NoAuthGuard } from "./guards/NoAuthGuard";
 import { Header } from "./components/Header";
-import { AuthController } from "./pages/layouts/auth/AuthController";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { AnimatePresence } from "framer-motion";
 import { Home } from "./pages/Home";
+import { AuthLayout } from "./pages/layouts/AuthLayout";
 
 function AppRoutes() {
   const location = useLocation();
@@ -23,7 +23,7 @@ function AppRoutes() {
           <Route
             element={
               <NoAuthGuard>
-                <AuthController orientation={"LeftToRight"} />
+                <AuthLayout orientation={"LeftToRight"} />
               </NoAuthGuard>
             }
           >
@@ -34,7 +34,7 @@ function AppRoutes() {
           <Route
             element={
               <NoAuthGuard>
-                <AuthController orientation={"RightToLeft"} />
+                <AuthLayout orientation={"RightToLeft"} />
               </NoAuthGuard>
             }
           >
