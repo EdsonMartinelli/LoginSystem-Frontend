@@ -9,6 +9,8 @@ import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { useAuth } from "../hooks/useAuth";
 import { useOrientation } from "../hooks/useOrientation";
+import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
+import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 import { errorToast } from "../utils/errorToast";
 
 export function Login() {
@@ -52,10 +54,11 @@ export function Login() {
           navigate("/profile");
         })
         .catch((error: any) => {
+          const errorAssert: APIErrorProps = AssertAPIError(error)
           toast(
             errorToast({
-              message: error.message,
-              status: error.cause.status,
+              message: errorAssert.message,
+              status: errorAssert.status,
             })
           );
         })

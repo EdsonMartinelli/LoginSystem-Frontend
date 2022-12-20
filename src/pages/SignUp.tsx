@@ -4,13 +4,14 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-
 import { CheckBoxFormik } from "../components/CheckBoxFormik";
 import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { useOrientation } from "../hooks/useOrientation";
+import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
 import { APIServiceInstance } from "../services/APIService";
+import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 import { errorToast } from "../utils/errorToast";
 import { successToast } from "../utils/successToast";
 
@@ -67,10 +68,11 @@ export function SignUp() {
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {
+          const errorAssert: APIErrorProps = AssertAPIError(error)
           toast(
             errorToast({
-              message: error.message,
-              status: error.cause.status,
+              message: errorAssert.message,
+              status: errorAssert.status
             })
           );
         })

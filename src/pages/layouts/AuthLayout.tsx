@@ -41,13 +41,14 @@ export function AuthLayout({
       display="flex"
       justifyContent="center"
       alignItems="center"
+      flexDirection="column"
       width="100%"
       height="calc(100vh - 48px)"
     >
       <Box
         id="content"
         display="flex"
-        width={{ base: "300px", md: "500px", lg: "1000px" }}
+        width={{ sm: "300px", md: "500px", lg: "1000px" }}
         height="580px"
         flexDirection={orientation === "LeftToRight" ? "row" : "row-reverse"}
       >
@@ -129,6 +130,16 @@ export function AuthLayout({
             />
           </motion.aside>
         </MotionConfig>
+      </Box>
+
+
+      <Box
+        display ={{ sm: "block", md: "none", lg: "none" }}
+        width="200px"
+        height="200px"
+        backgroundColor="red"
+      >
+
       </Box>
     </Box>
   );

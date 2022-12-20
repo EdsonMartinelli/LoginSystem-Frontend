@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { APIServiceInstance } from "../services/APIService";
-import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 
 interface User {
   id: string;
@@ -30,7 +29,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const APIService = APIServiceInstance();
 
   async function userLogin({ email, password }: loginProps) {
-    try {
       const response = await APIService.user.login({ email, password });
       localStorage.setItem("token_login_system", response.token);
       const decoded = jwt_decode(response.token);
@@ -40,21 +38,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         username: userDecode.username,
         email: userDecode.email,
       });
-    } catch (error: any) {
-      const assertError = AssertAPIError(error);
-      throw new Error(assertError.message, {
-        cause: {
-          status: assertError.status,
-        },
-      });
-    }
-  }
+  } 
 
   function userLogout() {
     localStorage.removeItem("token_login_system");
     setUser(undefined);
   }
-
+  
   async function userValidate() {
     const token = localStorage.getItem("token_login_system");
 
@@ -62,25 +52,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       userLogout();
       throw new Error("There is no token!");
     }
-    try {
-      const response = await APIService.user.revalidateToken();
-      localStorage.setItem("token_login_system", response.token);
-      const decoded = jwt_decode(response.token);
-      const userDecode = decoded as User;
-      setUser({
-        id: userDecode.id,
-        username: userDecode.username,
-        email: userDecode.email,
-      });
-    } catch (error: any) {
-      userLogout();
-      const assertError = AssertAPIError(error);
-      throw new Error(assertError.message, {
-        cause: {
-          status: assertError.status,
-        },
-      });
-    }
+
+    const response = await APIService.user.revalidateToken();
+    localStorage.setItem("token_login_system", response.token);
+    const decoded = jwt_decode(response.token);
+    const userDecode = decoded as User;
+    setUser({
+      id: userDecode.id,
+      username: userDecode.username,
+      email: userDecode.email,
+    });
+    
   }
 
   return (
