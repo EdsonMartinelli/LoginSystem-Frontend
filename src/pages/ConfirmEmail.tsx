@@ -5,7 +5,9 @@ import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormButton } from "../components/FormButton";
 import { TextInputFormik } from "../components/TextInputFormik";
+import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
 import { APIServiceInstance } from "../services/APIService";
+import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 import { errorToast } from "../utils/errorToast";
 import { successToast } from "../utils/successToast";
 
@@ -31,10 +33,11 @@ export function ConfirmEmail() {
         toast(successToast("Account validate with success"));
       })
       .catch((error: any) => {
+        const errorAssert: APIErrorProps = AssertAPIError(error)
         toast(
           errorToast({
-            message: error.message,
-            status: error.cause.status,
+            message: errorAssert.message,
+            status: errorAssert.status,
           })
         );
       })
