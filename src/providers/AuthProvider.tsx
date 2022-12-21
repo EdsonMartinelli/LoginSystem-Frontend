@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import jwt_decode from "jwt-decode";
-import { APIServiceInstance } from "../services/APIService";
+import { IUserHttpClient } from "../interfaces/http/IUserHttpClient";
 
 interface User {
   id: string;
@@ -11,6 +11,11 @@ interface User {
 interface loginProps {
   email: string;
   password: string;
+}
+
+interface authProviderProps {
+  userHttpClient: IUserHttpClient;
+  children: ReactNode;
 }
 
 export interface authContextProps {
@@ -24,36 +29,11 @@ const initialValue = {};
 const defaultValue = initialValue as authContextProps;
 export const AuthContext = createContext<authContextProps>(defaultValue);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children, userHttpClient }: authProviderProps) {
   const [user, setUser] = useState<User | undefined>(undefined);
-  const APIService = APIServiceInstance();
 
   async function userLogin({ email, password }: loginProps) {
-      const response = await APIService.user.login({ email, password });
-      localStorage.setItem("token_login_system", response.token);
-      const decoded = jwt_decode(response.token);
-      const userDecode = decoded as User;
-      setUser({
-        id: userDecode.id,
-        username: userDecode.username,
-        email: userDecode.email,
-      });
-  } 
-
-  function userLogout() {
-    localStorage.removeItem("token_login_system");
-    setUser(undefined);
-  }
-  
-  async function userValidate() {
-    const token = localStorage.getItem("token_login_system");
-
-    if (token == null) {
-      userLogout();
-      throw new Error("There is no token!");
-    }
-
-    const response = await APIService.user.revalidateToken();
+    const response = await userHttpClient.login({ email, password });
     localStorage.setItem("token_login_system", response.token);
     const decoded = jwt_decode(response.token);
     const userDecode = decoded as User;
@@ -62,7 +42,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       username: userDecode.username,
       email: userDecode.email,
     });
-    
+  }
+
+  function userLogout() {
+    localStorage.removeItem("token_login_system");
+    setUser(undefined);
+  }
+
+  async function userValidate() {
+    const token = localStorage.getItem("token_login_system");
+
+    if (token == null) {
+      userLogout();
+      throw new Error("There is no token!");
+    }
+
+    const response = await userHttpClient.revalidateToken();
+    localStorage.setItem("token_login_system", response.token);
+    const decoded = jwt_decode(response.token);
+    const userDecode = decoded as User;
+    setUser({
+      id: userDecode.id,
+      username: userDecode.username,
+      email: userDecode.email,
+    });
   }
 
   return (

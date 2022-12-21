@@ -3,12 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./providers/AuthProvider";
 import AppRoutes from "./AppRoutes";
 import { theme } from "./theme/themeConfig";
+import { axiosUserHttpClient } from "./services/axios/axiosUserHttpClient";
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <AuthProvider>
+      <AuthProvider userHttpClient={axiosUserHttpClient}>
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>

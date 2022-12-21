@@ -9,24 +9,27 @@ import { FormButton } from "../components/FormButton";
 import { PasswordInputFormik } from "../components/PasswordInputFormik";
 import { TextInputFormik } from "../components/TextInputFormik";
 import { useOrientation } from "../hooks/useOrientation";
-import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
-import { APIServiceInstance } from "../services/APIService";
+import { APIErrorProps } from "../interfaces/http/errors/APIErrorProps";
+import { IUserHttpClient } from "../interfaces/http/IUserHttpClient";
 import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 import { errorToast } from "../utils/errorToast";
 import { successToast } from "../utils/successToast";
 
 interface signUpProps {
+  userHttpClient: IUserHttpClient;
+}
+
+interface signUpFormProps {
   username: string;
   email: string;
   password: string;
   terms: boolean;
 }
 
-export function SignUp() {
+export function SignUp({ userHttpClient }: signUpProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
   const navigate = useNavigate();
-  const APIService = APIServiceInstance();
   const { orientation } = useOrientation();
 
   const validationSchema = yup.object().shape({
@@ -53,10 +56,15 @@ export function SignUp() {
     terms: yup.boolean().oneOf([true]),
   });
 
-  function signUpHandler({ username, email, password, terms }: signUpProps) {
+  function signUpHandler({
+    username,
+    email,
+    password,
+    terms,
+  }: signUpFormProps) {
     setIsLoading(true);
     if (username != null && email != null && password != null && terms) {
-      APIService.user
+      userHttpClient
         .signUp({
           username,
           email,
@@ -68,11 +76,11 @@ export function SignUp() {
           navigate(`/active/${userID}`, { state: { orientation } });
         })
         .catch((error: any) => {
-          const errorAssert: APIErrorProps = AssertAPIError(error)
+          const errorAssert: APIErrorProps = AssertAPIError(error);
           toast(
             errorToast({
               message: errorAssert.message,
-              status: errorAssert.status
+              status: errorAssert.status,
             })
           );
         })

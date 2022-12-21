@@ -25,8 +25,6 @@ const contentStyle: CSSProperties = {
   overflow: "hidden",
 };
 
-
-
 export function AuthLayout({
   orientation,
 }: {
@@ -136,15 +134,12 @@ export function AuthLayout({
         </MotionConfig>
       </Box>
 
-
       <Box
-        display ={{ sm: "block", md: "none", lg: "none" }}
+        display={{ sm: "block", md: "none", lg: "none" }}
         width="200px"
         height="200px"
         backgroundColor="red"
-      >
-
-      </Box>
+      ></Box>
     </Box>
   );
 }

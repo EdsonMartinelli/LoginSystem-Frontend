@@ -12,6 +12,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { AnimatePresence } from "framer-motion";
 import { Home } from "./pages/Home";
 import { AuthLayout } from "./pages/layouts/AuthLayout";
+import { axiosUserHttpClient } from "./services/axios/axiosUserHttpClient";
 
 function AppRoutes() {
   const location = useLocation();
@@ -38,8 +39,14 @@ function AppRoutes() {
               </NoAuthGuard>
             }
           >
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/active/:id" element={<ConfirmEmail />} />
+            <Route
+              path="/signup"
+              element={<SignUp userHttpClient={axiosUserHttpClient} />}
+            />
+            <Route
+              path="/active/:id"
+              element={<ConfirmEmail userHttpClient={axiosUserHttpClient} />}
+            />
             <Route path="/activated" element={<AccountActivated />} />
           </Route>
 

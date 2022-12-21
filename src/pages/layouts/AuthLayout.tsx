@@ -14,29 +14,30 @@ export interface animatedAuthProps {
   children: ReactNode;
 }
 
-interface contentStyleBoxProps extends BoxProps{
+interface contentStyleBoxProps extends BoxProps {
   children: ReactNode;
 }
 
-const ContentStyleBox = forwardRef<contentStyleBoxProps, 'div'> (
-  ({children,...props}: contentStyleBoxProps, ref) => {
-  return(
-    <Box
-      flex="1"
-      height="100%"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      boxShadow={{ base: "none", md:"0 8px 32px 0 rgba(31, 38, 135, 0.2)" }}
-      boxSizing="border-box"
-      overflow="hidden"
-      ref={ref}
-      {...props}
-    >
-      {children}
-    </Box>
-  )
-})
+const ContentStyleBox = forwardRef<contentStyleBoxProps, "div">(
+  ({ children, ...props }: contentStyleBoxProps, ref) => {
+    return (
+      <Box
+        flex="1"
+        height="100%"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        boxShadow={{ base: "none", md: "0 8px 32px 0 rgba(31, 38, 135, 0.2)" }}
+        boxSizing="border-box"
+        overflow="hidden"
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Box>
+    );
+  }
+);
 
 export function AuthLayout({
   orientation,
@@ -61,7 +62,7 @@ export function AuthLayout({
       <Box
         id="content"
         display="flex"
-        width={{ base:"100%", sm: "100%", md: "650px", lg: "1000px" }}
+        width={{ base: "100%", sm: "100%", md: "650px", lg: "1000px" }}
         height="580px"
         flexDirection={orientation === "LeftToRight" ? "row" : "row-reverse"}
       >
@@ -74,16 +75,15 @@ export function AuthLayout({
               base: "none",
               sm: "none",
               md: `1px solid rgba${
-                  colorMode === "dark"
+                colorMode === "dark"
                   ? "(255, 255, 255, 0.18)"
                   : "(0, 0, 0, 0.18)"
-                }`
-              
+              }`,
             }}
             borderRadius={
               orientation === "LeftToRight"
-              ? "10px 0px 0px 10px" 
-              : "0px 10px 10px 0px"
+                ? "10px 0px 0px 10px"
+                : "0px 10px 10px 0px"
             }
             boxSizing="border-box"
             initial={{
@@ -111,7 +111,7 @@ export function AuthLayout({
           <ContentStyleBox
             as={motion.aside}
             zIndex="2"
-            display ={{ base:"none", sm: "none", md: "flex", lg: "flex" }}
+            display={{ base: "none", sm: "none", md: "flex", lg: "flex" }}
             initial={
               orientation === previousOrientation ||
               previousOrientation === undefined
@@ -147,15 +147,12 @@ export function AuthLayout({
         </MotionConfig>
       </Box>
 
-
       <Box
-        display ={{ base: "block", sm: "block", md: "none", lg: "none" }}
+        display={{ base: "block", sm: "block", md: "none", lg: "none" }}
         width="200px"
         height="50px"
         backgroundColor="red"
-      >
-
-      </Box>
+      ></Box>
     </Box>
   );
 }

@@ -5,14 +5,17 @@ import { useParams } from "react-router-dom";
 import * as yup from "yup";
 import { FormButton } from "../components/FormButton";
 import { TextInputFormik } from "../components/TextInputFormik";
-import { APIErrorProps } from "../interfaces/API/errors/APIErrorProps";
-import { APIServiceInstance } from "../services/APIService";
+import { APIErrorProps } from "../interfaces/http/errors/APIErrorProps";
+import { IUserHttpClient } from "../interfaces/http/IUserHttpClient";
 import { AssertAPIError } from "../utils/APIErrorPropsAssert";
 import { errorToast } from "../utils/errorToast";
 import { successToast } from "../utils/successToast";
 
-export function ConfirmEmail() {
-  const APIService = APIServiceInstance();
+interface confirmEmailProps {
+  userHttpClient: IUserHttpClient;
+}
+
+export function ConfirmEmail({ userHttpClient }: confirmEmailProps) {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
@@ -27,13 +30,13 @@ export function ConfirmEmail() {
 
   function confirmEmailHandler({ code }: { code: string }) {
     setIsLoading(true);
-    APIService.user
+    userHttpClient
       .validateEmail({ id: id ?? "", emailToken: code })
       .then((response) => {
         toast(successToast("Account validate with success"));
       })
       .catch((error: any) => {
-        const errorAssert: APIErrorProps = AssertAPIError(error)
+        const errorAssert: APIErrorProps = AssertAPIError(error);
         toast(
           errorToast({
             message: errorAssert.message,
