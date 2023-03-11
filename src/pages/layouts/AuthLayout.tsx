@@ -1,7 +1,13 @@
-import { Box, BoxProps, forwardRef, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Button,
+  forwardRef,
+  useColorMode,
+} from "@chakra-ui/react";
 import { motion, MotionConfig } from "framer-motion";
 import { ReactNode } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AsideAuthContent } from "../../components/AsideAuthContent";
 import {
   orientationAuthAnimation,
@@ -49,6 +55,14 @@ export function AuthLayout({
   const location = useLocation();
   const previousOrientation = (location.state as typeState)?.orientation;
 
+  const navigate = useNavigate();
+
+  function goTo() {
+    navigate(orientation === "LeftToRight" ? "/signup" : "/login", {
+      state: { orientation },
+    });
+  }
+
   return (
     <Box
       id="background"
@@ -57,7 +71,8 @@ export function AuthLayout({
       alignItems="center"
       flexDirection="column"
       width="100%"
-      height="calc(100vh - 48px)"
+      height="calc(100vh - 64px)"
+      overflow="hidden"
     >
       <Box
         id="content"
@@ -116,21 +131,26 @@ export function AuthLayout({
               orientation === previousOrientation ||
               previousOrientation === undefined
                 ? {
+                    opacity: previousOrientation === undefined ? 0 : 1,
                     x: 0,
                     borderRadius:
                       orientation === "LeftToRight"
                         ? "0px 10px 10px 0px"
                         : "10px 0px 0px 10px",
+                    transitionDuration: "0.1s",
                   }
                 : {
+                    opacity: previousOrientation === undefined ? 0 : 1,
                     x: orientation === "LeftToRight" ? "-100%" : "100%",
                     borderRadius:
                       orientation === "LeftToRight"
                         ? "10px 0px 0px 10px"
                         : "0px 10px 10px 0px",
+                    transitionDuration: "0.1s",
                   }
             }
             animate={{
+              opacity: 1,
               x: 0,
               borderRadius:
                 orientation === "LeftToRight"
@@ -147,12 +167,16 @@ export function AuthLayout({
         </MotionConfig>
       </Box>
 
-      <Box
+      <Button
         display={{ base: "block", sm: "block", md: "none", lg: "none" }}
         width="200px"
         height="50px"
-        backgroundColor="red"
-      ></Box>
+        backgroundColor="messenger.500"
+        color="white"
+        onClick={() => goTo()}
+      >
+        {orientation === "LeftToRight" ? "Sign Up" : "Login"}
+      </Button>
     </Box>
   );
 }
