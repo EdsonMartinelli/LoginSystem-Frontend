@@ -6,10 +6,11 @@ import {
   useColorMode,
   Heading,
 } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
   return (
     <>
       <header
@@ -27,6 +28,10 @@ export function Header() {
           as="h4"
           size="md"
           color={colorMode === "dark" ? "white" : "messenger.500"}
+          onClick={() => {
+            navigate("/");
+          }}
+          cursor="pointer"
         >
           Login System
         </Heading>

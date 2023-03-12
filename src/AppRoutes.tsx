@@ -5,7 +5,7 @@ import { RecoverPassword } from "./pages/RecoverPassword";
 import { ConfirmEmail } from "./pages/ConfirmEmail";
 import { AccountActivated } from "./pages/AccountActivated";
 import { Profile } from "./pages/Profile";
-import { AuthGuard } from "./guards/AuthGuard";
+// import { AuthGuard } from "./guards/AuthGuard";
 import { NoAuthGuard } from "./guards/NoAuthGuard";
 import { Header } from "./components/Header";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -53,9 +53,10 @@ function AppRoutes() {
           <Route
             path="/profile"
             element={
-              <AuthGuard>
+              /* <AuthGuard>
                 <Profile />
-              </AuthGuard>
+              </AuthGuard> */
+              <Profile />
             }
           />
         </Route>
